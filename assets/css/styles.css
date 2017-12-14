@@ -1,0 +1,9 @@
+
+/* Main View */
+.card .card-header h2 {
+    margin: 0;
+    line-height: 61px;
+}
+.card .card-header form .form-group {
+    margin-bottom: 0;
+}

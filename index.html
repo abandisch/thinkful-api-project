@@ -7,6 +7,8 @@
     <meta name="description" content="Get the latest market data, news and social media posts for cryptocurrencies">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Custom Styles -->
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
@@ -16,21 +18,37 @@
             <h1 class="text-center">Cryptocurrency Market Data, News & Social Posts</h1>
         </header>
         <main role="main">
-            <section role="region">
-                <form class="filter-form">
-                    <label for="filter">Filter Cryptocurrencies</label>
-                    <input type="text" name="filter" id="filter" placeholder="Filter">
-                </form>
+
+            <!-- Crypto List Page -->
+            <section role="region" class="js-main-page">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="float-left">Cryptocurrency List</h2>
+                        <form class="float-right">
+                            <div class="form-group">
+                                <label for="filter-list" class="sr-only">Filter Cryptocurrencies</label>
+                                <!--<input class="form-control" type="text" name="filterList" id="filter-list" placeholder="Filter Name/Symbol">-->
+                                <input data-toggle="tooltip" data-placement="top" title="Filter not available in MVP version of app." class="form-control" aria-label="Filter Cryptocurrency List" aria-describedby="filter-help" type="text" name="filter-list" id="filter-list" placeholder="Filter by Name/Symbol">
+                                <small id="filter-help" class="form-text text-muted">Filter by name or ticker symbol</small>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-body">
+                        <ul class="js-crypto-list">
+                            <li>[icon] Cryptocurrency (ticker)</li>
+                            <li>[icon] Cryptocurrency (ticker)</li>
+                            <li>[icon] Cryptocurrency (ticker)</li>
+                            <li>[icon] Cryptocurrency (ticker)</li>
+                            <li>[icon] Cryptocurrency (ticker)</li>
+                            <li>[icon] Cryptocurrency (ticker)</li>
+                        </ul>
+                    </div>
+                </div>
             </section>
-            <section role="region">
-                <ul class="js-crypto-list">
-                    <li>[icon] Cryptocurrency (ticker)</li>
-                    <li>[icon] Cryptocurrency (ticker)</li>
-                    <li>[icon] Cryptocurrency (ticker)</li>
-                    <li>[icon] Cryptocurrency (ticker)</li>
-                    <li>[icon] Cryptocurrency (ticker)</li>
-                    <li>[icon] Cryptocurrency (ticker)</li>
-                </ul>
+
+            <!-- Crypto Details Page -->
+            <section role="region" class="js-crypto-detail-page">
+
             </section>
         </main>
     </div>

@@ -50,3 +50,8 @@ const apiView = {
 const eventHandler = {
 
 };
+
+// Tooltips
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});
