@@ -1,5 +1,8 @@
 # Thinkful Capstone Project 2 - API Calls
 
+## What does this app do?
+The app provides users a list of cryptocurrencies, which a user can select from to view information for the given Cryptocurrency - this includes market data (from coinmarketcap.com), latest social media posts (reddit.com) and any latest related news articles (various sources from newsapi.org).
+
 ## User Flow Diagram
 
 Initial user flow diagram
