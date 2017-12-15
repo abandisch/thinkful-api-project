@@ -9,7 +9,7 @@
  * @param marketData - Market Data object
  * @constructor
  */
-function CryptoCurrency(name, symbol, rank, iconPATH, marketData) {
+function CryptoCurrency(name, symbol, rank, marketData, iconPATH) {
     this.cryptoName = name;
     this.tickerSymbol = symbol;
     this.rank = rank;
@@ -66,7 +66,7 @@ const apiApp = {
     fetchCoinData: function (apiViewCallback) {
         this.callAPI(new ApiQueryParams(
             this.coinmarketcapAPIURL,
-            { limit: 10 },
+            { limit: 0 },
             (apiData) => {
                 for (let key in apiData) {
                     // Create the CryptoCurrency object
@@ -110,9 +110,6 @@ const apiApp = {
                     ));
 
     },
-    forEachCryptoCurrency: function (callback) {
-        this.cryptocurrencyList.forEach(callback);
-    }
 };
 
 /**
@@ -121,21 +118,23 @@ const apiApp = {
 const apiView = {
     initMainPage: function () {
         apiApp.initCryptoCurrencyList(function () {
+            // Setup top ten list on main page
+            // Show 'loading' text and remove it once the load is complete
             let liElement;
-            let topTenList = $('.top-ten-cryptos');
-
-            apiApp.forEachCryptoCurrency(function (cryptocurrency) {
+            let topTenListHTML = '';
+            for (let i = 0; i < 10; i++) {
                 liElement = `<li>
-                                <a href="#">
+                                <a href="#" data-crypto="${apiApp.cryptocurrencyList[i].tickerSymbol}">
                                     <figure class="figure">
-                                        <img src="${cryptocurrency.iconPATH}" alt="${cryptocurrency.cryptoName}">
-                                        <figcaption class="figure-caption text-center">${cryptocurrency.tickerSymbol}</figcaption>
+                                        <img src="${apiApp.cryptocurrencyList[i].iconPATH}" alt="${apiApp.cryptocurrencyList[i].cryptoName}">
+                                        <figcaption class="figure-caption text-center">${apiApp.cryptocurrencyList[i].tickerSymbol}</figcaption>
                                     </figure>
                                 </a>
                             </li>`;
-                topTenList.append(liElement);
-            });
-            //console.log('appView: coins have finished loading, let the user search');
+                topTenListHTML += liElement;
+            }
+            $('.text-loading').prop('hidden', true).attr('aria-hidden', 'true');
+            $('.top-ten-cryptos').append(topTenListHTML);
         });
     },
 };
