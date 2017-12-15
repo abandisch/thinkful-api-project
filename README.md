@@ -25,7 +25,8 @@ Initial wireframe designs.
 ***Note:** Any items that are checked in the below lists are included in the MVP.*
 
 **1. Main page user stories**
-* [x] As a user I want to search for a cryptocurrency by name or symbol, so that I can see more information about that cryptocurrency
+* [x] As a user I want to see the current top 10 cryptocurrencies, so that I can get more information about each of them
+* [ ] As a user I want to search for a cryptocurrency, so I can see more information about that specific cryptocurrency
 * [ ] As a user I want to have automatic suggestions dropdown under the search tetbox when searching for a cryptocurrency, so that I can see the available cryptocurrencies
 
 **2. Cryptocurrency information page user stories**
