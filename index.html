@@ -19,37 +19,33 @@
         </header>
         <main role="main">
 
-            <!-- Crypto List Page -->
-            <section role="region" class="js-main-page">
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="float-left">Cryptocurrency List</h2>
-                        <form class="float-right">
-                            <div class="form-group">
-                                <label for="filter-list" class="sr-only">Filter Cryptocurrencies</label>
-                                <!--<input class="form-control" type="text" name="filterList" id="filter-list" placeholder="Filter Name/Symbol">-->
-                                <input data-toggle="tooltip" data-placement="top" title="Filter not available in MVP version of app." class="form-control" aria-label="Filter Cryptocurrency List" aria-describedby="filter-help" type="text" name="filter-list" id="filter-list" placeholder="Filter by Name/Symbol">
-                                <small id="filter-help" class="form-text text-muted">Filter by name or ticker symbol</small>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="card-body">
-                        <ul class="js-crypto-list">
-                            <li>[icon] Cryptocurrency (ticker)</li>
-                            <li>[icon] Cryptocurrency (ticker)</li>
-                            <li>[icon] Cryptocurrency (ticker)</li>
-                            <li>[icon] Cryptocurrency (ticker)</li>
-                            <li>[icon] Cryptocurrency (ticker)</li>
-                            <li>[icon] Cryptocurrency (ticker)</li>
-                        </ul>
-                    </div>
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="float-left">Cryptocurrency Research</h2>
+                    <form class="float-right">
+                        <div class="form-group">
+                            <label for="search-input" class="sr-only">Search Crypto (Name or Symbol)</label>
+                            <input id="search-input" class="form-control" aria-label="Search for Cryptocurrency" aria-describedby="search-help" type="text" placeholder="Search Name/Symbol">
+                            <small id="search-help" class="form-text text-muted">Search by name or ticker symbol</small>
+                        </div>
+                    </form>
                 </div>
-            </section>
+                <div class="card-body">
+                    <section class="start-page">
+                        <h3 class="text-center">Search for a Cryptocurrency to begin.</h3>
+                        <p class="text-center">Get the latest Market Data, News headlines and Reddit posts of your favourite Cryptocurrency all in one place.</p>
+                    </section>
+                    <section role="region" class="info-page" hidden aria-hidden="true">
+                        <article role="article" class="js-market-data">
+                        </article>
+                        <article role="article" class="js-news-articles">
+                        </article>
+                        <article role="article" class="js-reddit-posts">
+                        </article>
+                    </section>
+                </div>
+            </div>
 
-            <!-- Crypto Details Page -->
-            <section role="region" class="js-crypto-detail-page">
-
-            </section>
         </main>
     </div>
     <!-- jQuery -->
@@ -57,6 +53,8 @@
     <!-- Bootstrap Required JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <!-- Underscore.js - for helper functions -->
+    <script src="assets/js/underscore-min.js"></script>
     <!-- Custom JS -->
     <script src="assets/js/api-app.js"></script>
 </body>
