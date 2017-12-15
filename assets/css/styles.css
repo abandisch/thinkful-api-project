@@ -10,3 +10,18 @@
 .card .card-header form .form-group {
     margin-bottom: 0;
 }
+
+/* Top ten cryptos list */
+.top-ten-container {
+    margin-top: 30px;
+}
+.top-ten-cryptos {
+    list-style-type: none;
+}
+.top-ten-cryptos li {
+    display: inline-block;
+    padding: 0 10px;
+}
+.top-ten-cryptos li figure img {
+    max-width: 50px;
+}

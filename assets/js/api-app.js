@@ -90,7 +90,6 @@ const apiApp = {
                     // and add to the cryptocurrencyList array
                     this.cryptocurrencyList.push(crypto);
                 }
-                console.log(this.cryptocurrencyList);
                 apiViewCallback();
             },
             'Unable to fetch coin data from coinmarketcap.com API. Please try again later.'
@@ -110,6 +109,9 @@ const apiApp = {
                         'Unable to fetch cryptocurrency list from cryptocompare.com API. Please try again later.'
                     ));
 
+    },
+    forEachCryptoCurrency: function (callback) {
+        this.cryptocurrencyList.forEach(callback);
     }
 };
 
@@ -119,7 +121,21 @@ const apiApp = {
 const apiView = {
     initMainPage: function () {
         apiApp.initCryptoCurrencyList(function () {
-            console.log('appView: coins have finished loading, let the user search');
+            let liElement;
+            let topTenList = $('.top-ten-cryptos');
+
+            apiApp.forEachCryptoCurrency(function (cryptocurrency) {
+                liElement = `<li>
+                                <a href="#">
+                                    <figure class="figure">
+                                        <img src="${cryptocurrency.iconPATH}" alt="${cryptocurrency.cryptoName}">
+                                        <figcaption class="figure-caption text-center">${cryptocurrency.tickerSymbol}</figcaption>
+                                    </figure>
+                                </a>
+                            </li>`;
+                topTenList.append(liElement);
+            });
+            //console.log('appView: coins have finished loading, let the user search');
         });
     },
 };
