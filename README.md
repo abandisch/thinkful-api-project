@@ -25,13 +25,12 @@ Initial wireframe designs.
 ***Note:** Any items that are checked in the below lists are included in the MVP.*
 
 **1. Main page user stories**
-* [x] As a user I want to see a list of cryptocurrencies, their icon and associated ticker symbol, so that I can peruse them
-* [ ] As a user I want to filter the list of cryptocurrency coins by ticker symbol or name so that I can find the one I’m looking for easier
-* [x] As a user I want to click on a cryptocurrency coin too that I can view market data, news and social posts for that cryptocurrency
+* [x] As a user I want to search for a cryptocurrency by name or symbol, so that I can see more information about that cryptocurrency
+* [ ] As a user I want to have automatic suggestions dropdown under the search tetbox when searching for a cryptocurrency, so that I can see the available cryptocurrencies
 
 **2. Cryptocurrency information page user stories**
 * [x] As a user I want to see the current USD value, the market capitalisation and trading volume, so I know how much the cryptocurrency is worth
-* [x] As a user I want to see the latest news headlines related to the cryptocurrency so that I can keep up to date with new events
+* [x] As a user I want to see the latest news headlines related to the cryptocurrency so that I can keep up to date with current affairs
 * [ ] As a user I want to click on a news headline so that I can read the full article
 * [x] As a user I want to see posts from reddit related to the cryptocurrency so I can keep up to date with social media trends
 * [ ] As a user I want to click on a reddit post to go to that post of reddit.com so that I read comments from other users
