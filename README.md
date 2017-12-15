@@ -14,11 +14,11 @@ Initial user flow diagram
 
 Initial wireframe designs.
 
-1. Main page view - shows list of cryptocurrencies, with the option to filter and click on a cryptocurrency to view mew info
-![Main Coin List View](https://github.com/abandisch/thinkful-api-project/blob/master/resources/main-cc-list-view.png)
+1. Main page view - allows user to search for cryptocurrency to view mew info
+![Main Page View](https://github.com/abandisch/thinkful-api-project/blob/master/resources/main-page.png)
 
 2. Cryptocurrency information view - shows market data, related news articles and reddit posts
-![Coin Info View](https://github.com/abandisch/thinkful-api-project/blob/master/resources/cc-page-view.png)
+![Coin Info View](https://github.com/abandisch/thinkful-api-project/blob/master/resources/info-page.png)
 
 ## User Stories
 
