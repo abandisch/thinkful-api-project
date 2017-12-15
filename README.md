@@ -22,7 +22,7 @@ Initial wireframe designs.
 
 ## User Stories
 
-***Note:** Any items that are checked and italicised in the below lists are included in the MVP.*
+***Note:** Any items that are checked in the below lists are included in the MVP.*
 
 **1. Main page user stories**
 * [x] As a user I want to see a list of cryptocurrencies, their icon and associated ticker symbol, so that I can peruse them
