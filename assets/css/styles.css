@@ -1,5 +1,8 @@
 
-/* Main View */
+/* Start Page */
+.start-page {
+    padding: 10%;
+}
 .card .card-header h2 {
     margin: 0;
     line-height: 61px;
