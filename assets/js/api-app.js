@@ -44,6 +44,7 @@ const apiApp = {
     //cryptocompareAPIURL: 'https://min-api.cryptocompare.com/data/all/coinlist',
     cryptocompareAPIURL: 'assets/js/cryptocompare.json', // Pre-downloaded this, since I only need images
     coinmarketcapAPIURL: 'https://api.coinmarketcap.com/v1/ticker/',
+    currentCrypto: null,
     callAPI: function(apiQueryData) {
         // Should execute the Ajax call to the API URL and provide any query data
         // Should execute the success call back if successful
@@ -66,7 +67,7 @@ const apiApp = {
     fetchCoinData: function (apiViewCallback) {
         this.callAPI(new ApiQueryParams(
             this.coinmarketcapAPIURL,
-            { limit: 0 },
+            { limit: 10 },
             (apiData) => {
                 for (let key in apiData) {
                     // Create the CryptoCurrency object
@@ -110,6 +111,18 @@ const apiApp = {
                     ));
 
     },
+    getCrypto: function (symbol) {
+        // Should check if this.currentCrypto is null or the symbol that is required is not the currentCrypto
+        // Find the required crypto and return that
+        // Otherwise just return the currentCrypto
+        if (this.currentCrypto === null || this.currentCrypto.tickerSymbol !== symbol) {
+            this.currentCrypto = this.cryptocurrencyList.filter(function (crypto) {
+                return crypto.tickerSymbol === symbol;
+            })[0];
+            return !!this.currentCrypto ? this.currentCrypto : null;
+        }
+        return this.currentCrypto;
+    }
 };
 
 /**
@@ -124,7 +137,7 @@ const apiView = {
             let topTenListHTML = '';
             for (let i = 0; i < 10; i++) {
                 liElement = `<li>
-                                <a href="#" data-crypto="${apiApp.cryptocurrencyList[i].tickerSymbol}">
+                                <a href="#" data-crypto-symbol="${apiApp.cryptocurrencyList[i].tickerSymbol}">
                                     <figure class="figure">
                                         <img src="${apiApp.cryptocurrencyList[i].iconPATH}" alt="${apiApp.cryptocurrencyList[i].cryptoName}">
                                         <figcaption class="figure-caption text-center">${apiApp.cryptocurrencyList[i].tickerSymbol}</figcaption>
@@ -137,13 +150,43 @@ const apiView = {
             $('.top-ten-cryptos').append(topTenListHTML);
         });
     },
+    showCryptoDetails: function (cryptoSymbol) {
+        // Should hide the main page
+        // Should show the 'info' page
+        // Show market data for the given crypto
+        // Get apiApp to request news headlines and show them
+        // Get apiApp to request reddit posts and show them
+        $('.start-page').prop('hidden', true).attr('aria-hidden', 'true');
+        $('.info-page').prop('hidden', false).attr('aria-hidden', 'false');
+
+        // Get the crypto object
+        let crypto = apiApp.getCrypto(cryptoSymbol);
+
+        // Update crypto name in the headings
+        $('.js-crypto-name').text(` - ${crypto.cryptoName}`);
+        // Update market data for the current crypto
+        // USD price
+        $('.js-usd-price').text(crypto.marketData.price_usd);
+        // BTC price
+        $('.js-btc-price').text(crypto.marketData.price_btc);
+        // Market Cap
+        $('.js-market-cap').text(crypto.marketData.market_cap_usd);
+        // Trading volume
+        $('.js-volume').text(crypto.marketData.volume_24h_usd);
+    }
 };
 
 /**
  * Object to handle form events
  */
 const eventHandler = {
-    // TBC after MVP
+    mainPageClickEvents: function () {
+        $('.top-ten-cryptos').on('click', 'a', function (event) {
+            event.preventDefault();
+            let crypto = $(this).data('crypto-symbol');
+            apiView.showCryptoDetails(crypto);
+        })
+    }
 };
 
 // Tooltips
@@ -151,5 +194,13 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 });
 
-$(apiView.initMainPage());
+$(function () {
+    // Init the view
+    apiView.initMainPage();
+
+    // handle the click events on the main page
+    eventHandler.mainPageClickEvents();
+
+    // handle the search submit event - TBC after MVP
+});
 
