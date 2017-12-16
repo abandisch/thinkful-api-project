@@ -4,6 +4,10 @@
 This app aims to provide users with a aggregated view of market data, news and social media posts (only reddit for now) for a specific cryptocurrency. 
 The app provides users a list of cryptocurrencies (from cryptocompare.com), which a user can select from to view information for the given Cryptocurrency - this includes market data (from coinmarketcap.com), latest social media posts (reddit.com) and any latest related news articles (various sources from newsapi.org).
 
+## Demo Link
+
+https://abandisch.github.io/thinkful-api-project/
+
 ## User Flow Diagram
 
 Initial user flow diagram
