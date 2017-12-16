@@ -44,7 +44,10 @@ const apiApp = {
     //cryptocompareAPIURL: 'https://min-api.cryptocompare.com/data/all/coinlist',
     cryptocompareAPIURL: 'assets/js/cryptocompare.json', // Pre-downloaded this, since I only need images
     coinmarketcapAPIURL: 'https://api.coinmarketcap.com/v1/ticker/',
+    // newsapiorgAPIURL: 'https://newsapi.org/v2/everything',
+    newsapiorgAPIURL: 'assets/js/newsapi.json',
     currentCrypto: null,
+    newsArticleList: [],
     callAPI: function(apiQueryData) {
         // Should execute the Ajax call to the API URL and provide any query data
         // Should execute the success call back if successful
@@ -127,16 +130,18 @@ const apiApp = {
         // Should query newsapi.org for news headlines for the given crypto
         // Should execute the callback (which should display the news headlines on the page
         this.callAPI(new ApiQueryParams(
-            'https://newsapi.org/v2/everything',
+            this.newsapiorgAPIURL,
             {
             q: `crypto AND (${cryptoObject.cryptoName} OR ${cryptoObject.tickerSymbol})`,
                 sources: 'abc-news,australian-financial-review,crypto-coins-news,bloomberg,techradar,techcrunch,reuters,reddit-r-all,news-com-au,nbc-news,info-money,hacker-news,google-news,fortune,financial-times,financial-post,engadget,cnn,cnbc,cbs-news,buzzfeed,cbc-news,business-insider-uk,bbc-news,the-next-web,wired,the-washington-post',
                 sortBy: 'publishedAt',
                 apiKey: 'c148de8ea6b14e0da2a271e4b50f0f63',
-                language: 'en'
+                language: 'en',
+                page: 1 // Track this and increment to 'load more'
             },
-            function (resultsData) {
-                console.log(resultsData);
+            (resultsData) => {
+                this.newsArticleList = resultsData.articles;
+                callback(this.newsArticleList);
             },
             'cannot load data from newsapi.org'
         ));
@@ -192,25 +197,49 @@ const apiView = {
         this.displayMarketData(crypto);
         
         // Display the news headlines
-        this.displayNews(crypto);
+        this.displayNewsArticles(crypto);
 
     },
     displayMarketData: function (crypto) {
         // Update market data for the current crypto on the 'info' page
+        // Use some regex (sourced online) to format the number as a currency with commas
         // USD price
-        $('.js-usd-price').text(crypto.marketData.price_usd);
+        $('.js-usd-price').text('$' + Number.parseFloat(crypto.marketData.price_usd).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
         // BTC price
-        $('.js-btc-price').text(crypto.marketData.price_btc);
+        $('.js-btc-price').text(Number.parseFloat(crypto.marketData.price_btc).toFixed(2));
         // Market Cap
-        $('.js-market-cap').text(crypto.marketData.market_cap_usd);
+        $('.js-market-cap').text('$' + Number.parseFloat(crypto.marketData.market_cap_usd).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
         // Trading volume
-        $('.js-volume').text(crypto.marketData.volume_24h_usd);
+        $('.js-volume').text('$' + Number.parseFloat(crypto.marketData.volume_24h_usd).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
     },
-    displayNews: function (crypto) {
+    displayNewsArticles: function (crypto) {
         // Should get the apiApp object to query the news headlines
         // Should display these news headlines to the user
-        apiApp.fetchNewsHeadlines(crypto, function (newsAPIData) {
-            console.log(newsAPIData);
+        apiApp.fetchNewsHeadlines(crypto, function (newsArticles) {
+            let newsArticleContainer = $('.news-article-container');
+            let divElement = '';
+            let newsArticlesHTML = '';
+            newsArticles.forEach((article) => {
+                let publishedAtDate = new Date(article.publishedAt);
+                divElement = `<div class="news-item">
+                                 <div class="news-image">
+                                     <img src="${article.urlToImage}" alt="News Article Image">
+                                 </div>
+                                 <div class="news-content">
+                                     <h4 class="news-headline">${article.title}</h4>
+                                     <p class="news-description">${article.description}</p>
+                                     <a class="news-link" href="${article.url}" aria-label="Read Full Article on ${article.title}" target="_blank">Read Full Article <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                                     <p class="news-source"><small>Published by ${article.source.name} on ${publishedAtDate.getDate()}/${publishedAtDate.getMonth() + 1}/${publishedAtDate.getFullYear()}</small></p>
+                                 </div>
+                             </div>`;
+                newsArticlesHTML += divElement;
+            });
+            newsArticleContainer.append(newsArticlesHTML);
+
+            // Remove loading text and show news articles
+            $('.text-loading-articles').prop('hidden', true).attr('aria-hidden', 'true');
+            newsArticleContainer.prop('hidden', false).attr('aria-hidden', 'false');
+
         });
     }
 };

@@ -16,13 +16,19 @@
     /* News Articles */
     .news-item {
         display: flex;
-        justify-content: space-between;
+        padding: 0 0 10px;
+    }
+    .news-image {
+        width: 30%;
     }
     .news-image img {
-        max-width: 220px;
+        max-width: 100%;
+        max-height: 190px;
+        width: 100%;
     }
     .news-content {
         margin: 0 0 0 10px;
+        width: 70%;
     }
     .news-headline {
         font-size: 1.3em;
@@ -30,6 +36,9 @@
     .news-link {
         float: right;
         margin: 0;
+    }
+    .news-source {
+        text-align: left;
     }
 }
 

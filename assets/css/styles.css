@@ -140,6 +140,7 @@ main {
 .news-image img {
     max-width: 100%;
     height: auto;
+    border: 1px solid #eee;
 }
 .news-content {
     padding-bottom: 10px;
@@ -147,7 +148,7 @@ main {
 .news-link {
     text-decoration: none;
     display: block;
-    margin: 0 auto;
+    margin: 20px auto 10px;
     background: #003366;
     color: #fff;
     width: 160px;
@@ -159,8 +160,12 @@ main {
     font-size: 1.2em;
     text-align: justify;
 }
-.news-content p {
+.news-description {
     margin: 10px 0;
     text-align: justify;
     color: #222;
+}
+.news-source {
+    text-align: center;
+    margin: 0;
 }
