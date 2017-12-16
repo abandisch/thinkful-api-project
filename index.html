@@ -16,13 +16,13 @@
     <link rel="stylesheet" href="assets/css/media-queries.css">
 </head>
 <body>
+    <div class="page-wrapper"> <!-- Used for sticky footer -->
         <header role="banner">
             <h1 class="text-center">Cryptocurrency<br>Market Data, News & Social Posts</h1>
         </header>
-
         <main role="main">
             <div class="container">
-                <section class="start-page">
+                <section class="start-page" >
                     <p class="intro text-justify">Get the latest Market Data, News Headlines and Reddit posts of your favourite Cryptocurrency all in one place.</p>
                     <p class="text-loading text-center"><em>Loading cryptocurrencies ... please wait</em> <i class="fa fa-spinner fa-pulse fa-fw"></i></p>
                     <div class="search-form-container text-center" hidden aria-hidden="true">
@@ -51,29 +51,21 @@
                     <article role="article" class="js-news-articles">
                         <h3 class="info-heading">News Headlines <span class="js-crypto-name"></span></h3>
                         <p class="text-loading-articles"><em>Loading news articles ... please wait</em> <i class="fa fa-spinner fa-pulse fa-fw"></i></p>
-                         <div class="news-article-container">
-                             <!--    <div class="news-item">
-                                    <div class="news-image">
-                                        <img src="https://3bjir821uqix1xdupc2ey86g-wpengine.netdna-ssl.com/wp-content/uploads/2017/12/our_office.jpg" alt="News Article Image">
-                                    </div>
-                                    <div class="news-content">
-                                        <h4 class="news-headline">Regal Assets Launches Its Long-Awaited Crypto IRA to Service US Retirement Accounts</h4>
-                                        <p class="news-description">[…] The post Regal Assets Launches Its Long-Awaited Crypto IRA to Service US Retirement Accounts appeared first on CryptoCoinsNews.</p>
-                                        <a class="news-link" href="https://www.cryptocoinsnews.com/regal-assets-launches-long-awaited-crypto-ira-service-us-retirement-accounts/" aria-label="Read Full Article on Regal Assets Launches Its Long-Awaited Crypto IRA to Service US Retirement Accounts" target="_blank">Read Full Article <i class="fa fa-external-link" aria-hidden="true"></i></a>
-                                        <p class="news-source"><small>Published by TechRadar on 15/12/2017</small></p>
-                                    </div>
-                                </div> -->
-                         </div>
+                        <div class="news-article-container"></div>
                     </article>
                     <article role="article" class="js-reddit-posts">
+                        <h3 class="info-heading">Reddit Posts <span class="js-crypto-name"></span></h3>
+                        <p class="text-loading-articles"><em>Loading Reddit posts ... please wait</em> <i class="fa fa-spinner fa-pulse fa-fw"></i></p>
+                        <div class="news-article-container"></div>
                     </article>
                 </section>
             </div>
         </main>
+    </div>
 
-        <footer class="text-center">
-            <small>Cryptocurrency Research App by Alex Bandisch<br><a href="https://github.com/abandisch/thinkful-api-project" target="_blank">Source on GitHub</a></small>
-        </footer>
+    <footer class="text-center">
+        <small>Cryptocurrency Research App by Alex Bandisch<br><a href="https://github.com/abandisch/thinkful-api-project" target="_blank">Source on GitHub</a></small>
+    </footer>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!-- Custom JS -->

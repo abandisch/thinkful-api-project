@@ -1,0 +1,246 @@
+{
+  "status": "ok",
+  "totalResults": 21,
+  "articles": [
+    {
+      "source": {
+        "id": "techradar",
+        "name": "TechRadar"
+      },
+      "author": "Nick Farrell,Jonas DeMuro",
+      "title": "What is Bitcoin? Understanding BTC and other crypto-currencies",
+      "description": "We’ve updated our in-depth look at Bitcoin and the problems facing the virtual currency.",
+      "url": "http://www.techradar.com/news/what-is-bitcoin",
+      "urlToImage": "http://cdn.mos.cms.futurecdn.net/a329a823e50fb7262923b826bf04cbf0-1200-80.jpg",
+      "publishedAt": "2017-12-15T11:44:48Z"
+    },
+    {
+      "source": {
+        "id": "crypto-coins-news",
+        "name": "Crypto Coins News"
+      },
+      "author": "Tom Clancy",
+      "title": "Blockchain Leaders Coinfirm, NEO and QRC Partner to Build Smart Economy Ecosystem",
+      "description": "[…] The post Blockchain Leaders Coinfirm, NEO and QRC Partner to Build Smart Economy Ecosystem appeared first on CryptoCoinsNews.",
+      "url": "https://www.cryptocoinsnews.com/blockchain-leaders-coinfirm-neo-qrc-partner-build-smart-economy-ecosystem/",
+      "urlToImage": "https://3bjir821uqix1xdupc2ey86g-wpengine.netdna-ssl.com/wp-content/uploads/2017/12/Coinfirm-PR-Header.png",
+      "publishedAt": "2017-12-14T09:41:29Z"
+    },
+    {
+      "source": {
+        "id": "crypto-coins-news",
+        "name": "Crypto Coins News"
+      },
+      "author": "Josiah Wilmoth",
+      "title": "$500 Billion: Ethereum, Ripple Prices Carry Crypto Market Cap to Historic Milestone",
+      "description": "Cryptocurrencies achieved another historic milestone this week, as their combined market caps leaped above the $500 billion mark on the heels of an altcoin rally led by the ethereum and ripple prices.",
+      "url": "https://www.cryptocoinsnews.com/500-billion-ethereum-ripple-prices-carry-crypto-market-cap-to-historic-milestone/",
+      "urlToImage": "https://3bjir821uqix1xdupc2ey86g-wpengine.netdna-ssl.com/wp-content/uploads/2016/12/Fireworks-people.jpg",
+      "publishedAt": "2017-12-13T13:36:47Z"
+    },
+    {
+      "source": {
+        "id": "cnn",
+        "name": "CNN"
+      },
+      "author": "Paul R. La Monica",
+      "title": "Move over, bitcoin. Here comes litecoin",
+      "description": "Bitcoin mania is alive and well. But there's actually another cryptocurrency that's fared even better lately. Litecoin has doubled in the past day and is up an astonishing 10,000% in the last year. Can this end well?",
+      "url": "http://money.cnn.com/2017/12/12/investing/litecoin-price-coinbase/index.html",
+      "urlToImage": "http://i2.cdn.turner.com/money/dam/assets/171212102432-litecoin-780x439.jpg",
+      "publishedAt": "2017-12-12T16:31:09Z"
+    },
+    {
+      "source": {
+        "id": "crypto-coins-news",
+        "name": "Crypto Coins News"
+      },
+      "author": "Josiah Wilmoth",
+      "title": "Bitcoin Price, Crypto Markets Trade Up After Cboe Futures Launch",
+      "description": "[…] The post Bitcoin Price, Crypto Markets Trade Up After Cboe Futures Launch appeared first on CryptoCoinsNews.",
+      "url": "https://www.cryptocoinsnews.com/bitcoin-price-crypto-markets-trade-cboe-futures-launch/",
+      "urlToImage": "https://3bjir821uqix1xdupc2ey86g-wpengine.netdna-ssl.com/wp-content/uploads/2017/12/Springs.jpg",
+      "publishedAt": "2017-12-11T13:55:03Z"
+    },
+    {
+      "source": {
+        "id": "crypto-coins-news",
+        "name": "Crypto Coins News"
+      },
+      "author": "Tom Clancy",
+      "title": "Regal Assets Launches Its Long-Awaited Crypto IRA to Service US Retirement Accounts",
+      "description": "[…] The post Regal Assets Launches Its Long-Awaited Crypto IRA to Service US Retirement Accounts appeared first on CryptoCoinsNews.",
+      "url": "https://www.cryptocoinsnews.com/regal-assets-launches-long-awaited-crypto-ira-service-us-retirement-accounts/",
+      "urlToImage": "https://3bjir821uqix1xdupc2ey86g-wpengine.netdna-ssl.com/wp-content/uploads/2017/12/our_office.jpg",
+      "publishedAt": "2017-12-09T10:44:24Z"
+    },
+    {
+      "source": {
+        "id": "business-insider",
+        "name": "Business Insider"
+      },
+      "author": "Seth Archer",
+      "title": "Almost every major cryptocurrency not named bitcoin is falling",
+      "description": "Bitcoin has been taking traders on a wild, highly volatile ride on Thursday. The cryptocurrency rocketed past $16,000 early Thursday, just hours after clearing $15,000 and about 12 hours after hitting $14,000. On some exchanges, bitcoin was trading above $19,…",
+      "url": "http://www.businessinsider.com/bitcoin-ethereum-price-almost-every-cryptocurrency-not-named-bitcoin-falling-2017-12",
+      "urlToImage": "http://static5.businessinsider.com/image/5a2981468a4986c7048b45c9-1190-625/almost-every-major-cryptocurrency-not-named-bitcoin-is-falling.jpg",
+      "publishedAt": "2017-12-07T18:12:00Z"
+    },
+    {
+      "source": {
+        "id": "business-insider",
+        "name": "Business Insider"
+      },
+      "author": "Seth Archer",
+      "title": "Almost every major cryptocurrency not named bitcoin is falling",
+      "description": "Bitcoin has been taking traders on a wild, highly volatile ride on Thursday. The cryptocurrency rocketed past $16,000 early Thursday, just hours after clearing $15,000 and about 12 hours after hitting $14,000. On some exchanges, bitcoin was trading above $19,…",
+      "url": "http://markets.businessinsider.com/news/stocks/bitcoin-ethereum-price-almost-every-cryptocurrency-not-named-bitcoin-falling-2017-12-1010511133",
+      "urlToImage": "http://static2.businessinsider.com/image/5a297fed8a4986c7048b45a4-2400/magicmountaingardalandscrew.jpg",
+      "publishedAt": "2017-12-07T18:12:00Z"
+    },
+    {
+      "source": {
+        "id": "crypto-coins-news",
+        "name": "Crypto Coins News"
+      },
+      "author": "Josiah Wilmoth",
+      "title": "$15,000: Bitcoin Price Goes Parabolic, Cannibalizes Crypto Market",
+      "description": "[…] The post $15,000: Bitcoin Price Goes Parabolic, Cannibalizes Crypto Market appeared first on CryptoCoinsNews.",
+      "url": "https://www.cryptocoinsnews.com/bitcoin-price-goes-parabolic-cannibalizes-crypto-market/",
+      "urlToImage": "https://3bjir821uqix1xdupc2ey86g-wpengine.netdna-ssl.com/wp-content/uploads/2017/12/Big-ball-small-balls-1.jpg",
+      "publishedAt": "2017-12-07T14:34:50Z"
+    },
+    {
+      "source": {
+        "id": "crypto-coins-news",
+        "name": "Crypto Coins News"
+      },
+      "author": "Tom Clancy",
+      "title": "Bankera ICO Is Live: Be Part of the Banking Revolution",
+      "description": "[…] The post Bankera ICO Is Live: Be Part of the Banking Revolution appeared first on CryptoCoinsNews.",
+      "url": "https://www.cryptocoinsnews.com/bankera-ico-now-live-part-banking-revolution/",
+      "urlToImage": "https://3bjir821uqix1xdupc2ey86g-wpengine.netdna-ssl.com/wp-content/uploads/2017/12/bankera.png",
+      "publishedAt": "2017-12-07T13:18:34Z"
+    },
+    {
+      "source": {
+        "id": "financial-times",
+        "name": "Financial Times"
+      },
+      "author": "Hannah Murphy",
+      "title": "Drivers and risks of the cryptocurrency boom",
+      "description": "Bitcoin surge towards $10,000 reflects investor mania seen by some as a bubble",
+      "url": "https://www.ft.com/content/8db6ce04-d458-11e7-8c9a-d9c0a5c8d5c9",
+      "urlToImage": "http://prod-upp-image-read.ft.com/37b53a46-d3a3-11e7-a303-9060cb1e5f44",
+      "publishedAt": "2017-11-28T21:51:45Z"
+    },
+    {
+      "source": {
+        "id": "financial-times",
+        "name": "Financial Times"
+      },
+      "author": "John Authers",
+      "title": "Bitcoin — How Bizarden",
+      "description": "FT’s daily newsletter on the world of investment",
+      "url": "https://www.ft.com/content/272a8ea6-d3d5-11e7-a303-9060cb1e5f44",
+      "urlToImage": "http://prod-upp-image-read.ft.com/bce5205a-bd92-11e6-8b45-b8b81dd5d080",
+      "publishedAt": "2017-11-28T01:24:18Z"
+    },
+    {
+      "source": {
+        "id": "the-next-web",
+        "name": "The Next Web"
+      },
+      "author": "Már Másson Maack",
+      "title": "Everything you need to know about the TNW contributor platform",
+      "description": "In 2017 we at TNW decided to completely revamp our contributor platform. We used to have a free-for-all platform which sometime led to the discovery of new voices and topics, but it also produced a lot of poorly written articles. That’s why we created a new c…",
+      "url": "http://data.thenextweb.com/tnw/post/everything_you_need_to_know_about_the_tnw_contributor_program",
+      "urlToImage": "https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2017/10/tnw-contrib.png",
+      "publishedAt": "2017-11-27T13:01:34Z"
+    },
+    {
+      "source": {
+        "id": "the-next-web",
+        "name": "The Next Web"
+      },
+      "author": "Andrei Tiburca",
+      "title": "Index fund-type coins are about to enter Cryptocurrency market",
+      "description": "If you’ve seen media coverage of Bitcoin and the rise of cryptocurrencies, you’re probably thinking of getting into the action, if you haven’t already. One startup wants to provide an index fund type of product that lets investors combine their holdings, mana…",
+      "url": "http://data.thenextweb.com/tnw/post/index_fund-type_coins_are_about_to_enter_cryptocurrency_market",
+      "urlToImage": "https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2017/11/Crypto-5-Pixabay-2-social.jpg",
+      "publishedAt": "2017-11-24T15:46:23Z"
+    },
+    {
+      "source": {
+        "id": "cnbc",
+        "name": "CNBC"
+      },
+      "author": "Reuters",
+      "title": "Institutional investors close to adopting bitcoin, says ex-Fortress executive Novogratz",
+      "description": "Former Fortress Investment group executive Mike Novogratz said mainstream institutional investors are about six to eight months away from adopting bitcoin.",
+      "url": "https://www.cnbc.com/2017/11/13/novogratz-says-institutional-investors-will-soon-adopt-bitcoin.html",
+      "urlToImage": "https://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2015/05/07/102659829-RTX1BUEY.1910x1000.jpg",
+      "publishedAt": "2017-11-13T05:00:00Z"
+    },
+    {
+      "source": {
+        "id": "hacker-news",
+        "name": "Hacker News"
+      },
+      "author": "Ramon Recuero",
+      "title": "Crypto Evolution",
+      "description": "New cryptocurrencies test out new evolutionary paths as different species do. Then forks evolve some of these species and miners/community support will naturally select the most promising. These two mechanisms get compounded with the ‘breeding’ of these crypt…",
+      "url": "https://blog.ycombinator.com/crypto-evolution/",
+      "urlToImage": "http://blog.ycombinator.com/wp-content/uploads/2017/10/Crypto-Evolution.png",
+      "publishedAt": "2017-10-30T15:29:58Z"
+    },
+    {
+      "source": {
+        "id": "business-insider",
+        "name": "Business Insider"
+      },
+      "author": "Divya Joshi",
+      "title": "List of top virtual currencies in 2017 and what differentiates them",
+      "description": "With more than 1,100 cryptocurrencies and a total market cap of approximately $150 billion circulating in the market today, this ‘next-gen gold’ has taken the financial world by storm. The question of their survival, which enveloped this fintech invention in …",
+      "url": "http://www.businessinsider.com/list-top-cryptocurrencies-analysis-comparison-2017-10",
+      "urlToImage": "http://static5.businessinsider.com/image/59e913ffddd063d34a8b51c6-1190-625/list-of-top-virtual-currencies-in-2017-and-what-differentiates-them.jpg",
+      "publishedAt": "2017-10-19T21:07:45Z"
+    },
+    {
+      "source": {
+        "id": "business-insider",
+        "name": "Business Insider"
+      },
+      "author": "Frank Chaparro",
+      "title": "We asked cryptocurrency experts to respond to Jamie Dimon's bitcoin bashings — here's what they said",
+      "description": "Jamie Dimon has been a vocal critic of bitcoin since its earliest days, but his most recent comments have ignited a conversation about digital currencies on Wall Street. Two of the bankers' main arguments against the cryptocurrency are that it is in a bubble,…",
+      "url": "http://www.businessinsider.com/cryptocurrency-experts-on-dimons-critiques-of-bitcoin-2017-10",
+      "urlToImage": "http://static3.businessinsider.com/image/59e405971f848923008b5975-1190-625/we-asked-cryptocurrency-experts-to-respond-to-jamie-dimons-bitcoin-bashings--heres-what-they-said.jpg",
+      "publishedAt": "2017-10-18T20:24:12Z"
+    },
+    {
+      "source": {
+        "id": "business-insider",
+        "name": "Business Insider"
+      },
+      "author": "Frank Chaparro",
+      "title": "We asked cryptocurrency experts to respond to Jamie Dimon's bitcoin bashings -- here's what they said",
+      "description": "Jamie Dimon has been a vocal critic of bitcoin since its earliest days, but his most recent comments have ignited a conversation about digital currencies on Wall Street. More »",
+      "url": "https://www.businessinsider.com/cryptocurrency-experts-on-dimons-critiques-of-bitcoin-2017-10",
+      "urlToImage": "https://static.businessinsider.com/image/59e405831f848923008b5974-640/image.jpg",
+      "publishedAt": "2017-10-18T09:24:12Z"
+    },
+    {
+      "source": {
+        "id": "techcrunch",
+        "name": "TechCrunch"
+      },
+      "author": "Fitz Tepper",
+      "title": "The HOLD 10 Index is a passively managed fund of the top 10 cryptocurrencies",
+      "description": "This year the market capitalization of all cryptocurrencies has grown from about $13 billion to well over $150 billion, fueled by infusions of capital from all different types of investors. But irregardless of this extreme growth, it’s still very complicated …",
+      "url": "https://techcrunch.com/2017/10/16/the-hold-10-index-is-a-passively-managed-fund-of-the-top-10-cryptocurrencies/",
+      "urlToImage": "https://tctechcrunch2011.files.wordpress.com/2017/09/cryptocurrencies-up-chart.png",
+      "publishedAt": "2017-10-16T17:18:52Z"
+    }
+  ]
+}
