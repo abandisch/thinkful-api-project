@@ -88,7 +88,7 @@ const apiApp = {
                     } else {
                         crypto.iconPATH = !!this.cryptocompareData[apiData[key].symbol] ? `https://www.cryptocompare.com${this.cryptocompareData[apiData[key].symbol].ImageUrl}` : 'assets/images/generic-icon.jpg';
                     }
-                    // and add to the cryptocurrencyList array
+                    // add the CryptoCurrency object to the cryptocurrencyList array
                     this.cryptocurrencyList.push(crypto);
                 }
                 apiViewCallback();
@@ -99,7 +99,7 @@ const apiApp = {
     initCryptoCurrencyList: function (apiViewCallback) {
         // Should query Cryptocompare.com to get crypto data, which includes images for each crypto (the only reason to query this API)
         // Then should call the fetchCoinData, which will query coinmarketcap.com for crypto market data
-        // That call back function should build the array of CryptoCurrencies and then call apiViewCallback
+        // That callback function should build the array of CryptoCurrencies and then call apiViewCallback
         this.callAPI(new ApiQueryParams(
                         this.cryptocompareAPIURL,
                         { /* no parameters */ },
@@ -122,6 +122,24 @@ const apiApp = {
             return !!this.currentCrypto ? this.currentCrypto : null;
         }
         return this.currentCrypto;
+    },
+    fetchNewsHeadlines: function (cryptoObject, callback) {
+        // Should query newsapi.org for news headlines for the given crypto
+        // Should execute the callback (which should display the news headlines on the page
+        this.callAPI(new ApiQueryParams(
+            'https://newsapi.org/v2/everything',
+            {
+            q: `crypto AND (${cryptoObject.cryptoName} OR ${cryptoObject.tickerSymbol})`,
+                sources: 'abc-news,australian-financial-review,crypto-coins-news,bloomberg,techradar,techcrunch,reuters,reddit-r-all,news-com-au,nbc-news,info-money,hacker-news,google-news,fortune,financial-times,financial-post,engadget,cnn,cnbc,cbs-news,buzzfeed,cbc-news,business-insider-uk,bbc-news,the-next-web,wired,the-washington-post',
+                sortBy: 'publishedAt',
+                apiKey: 'c148de8ea6b14e0da2a271e4b50f0f63',
+                language: 'en'
+            },
+            function (resultsData) {
+                console.log(resultsData);
+            },
+            'cannot load data from newsapi.org'
+        ));
     }
 };
 
@@ -164,7 +182,16 @@ const apiView = {
 
         // Update crypto name in the headings
         $('.js-crypto-name').text(` - ${crypto.cryptoName}`);
-        // Update market data for the current crypto
+        
+        // Display the market data
+        this.displayMarketData(crypto);
+        
+        // Display the news headlines
+        this.displayNews(crypto);
+
+    },
+    displayMarketData: function (crypto) {
+        // Update market data for the current crypto on the 'info' page
         // USD price
         $('.js-usd-price').text(crypto.marketData.price_usd);
         // BTC price
@@ -173,6 +200,13 @@ const apiView = {
         $('.js-market-cap').text(crypto.marketData.market_cap_usd);
         // Trading volume
         $('.js-volume').text(crypto.marketData.volume_24h_usd);
+    },
+    displayNews: function (crypto) {
+        // Should get the apiApp object to query the news headlines
+        // Should display these news headlines to the user
+        apiApp.fetchNewsHeadlines(crypto, function (newsAPIData) {
+            console.log(newsAPIData);
+        });
     }
 };
 
@@ -189,10 +223,6 @@ const eventHandler = {
     }
 };
 
-// Tooltips
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-});
 
 $(function () {
     // Init the view
@@ -202,5 +232,8 @@ $(function () {
     eventHandler.mainPageClickEvents();
 
     // handle the search submit event - TBC after MVP
+
+    // Bootstrap Tooltips
+    //$('[data-toggle="tooltip"]').tooltip();
 });
 
