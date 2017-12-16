@@ -1,17 +1,119 @@
+/* General Styles */
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+body {
+    font-size: 16px;
+    font-family: 'Open Sans', 'Arial', sans-serif;
+    color: #222;
+    padding: 0;
+    margin: 0;
+}
+
+/* Headings */
+h1, h2, h3, h4 {
+    font-family: 'Alegreya', serif;
+    margin: 0;
+}
+
+/* Input Elements */
+input {
+    border: 1px solid #eee;
+    padding: 8px;
+    font-size: 0.9em;
+    border-radius: 3px;
+}
+
+/* helper classes */
+.text-center {
+    text-align: center;
+}
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+/* Layout */
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 5%;
+}
+
+/* Header */
+header {
+    background-color: #003366;
+    padding: 0.5em;
+}
+header h1 {
+    color: #fff;
+    font-size: 1.8em;
+}
+
+/* Footer */
+footer {
+    padding: 15px;
+    background-color: #222;
+    color: #dadada;
+    margin-top: 30px;
+    line-height: 1.3em;
+}
+footer a, footer a:active, footer a:focus, footer a:visited {
+    color: #dadada;
+}
+/* Main */
+main {
+    padding: 5% 2%;
+}
 
 /* Start Page */
-.start-page {
-    padding: 10%;
-}
-.card .card-header h2 {
-    margin: 0;
-    line-height: 61px;
-}
-.card .card-header form .form-group {
-    margin-bottom: 0;
+/* Intro text */
+.intro {
+    text-align: justify;
 }
 
-/* Top ten cryptos list */
+/* Search form */
+.search-form-container {
+    margin-top: 30px;
+}
+.search-input, .search-help {
+    display: block;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto 10px;
+}
+
+/* Top 10 list */
+.top-ten-container {
+    margin-top: 30px;
+}
+.top-ten-cryptos {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+}
+.top-ten-cryptos li figure {
+    margin: 10px;
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 3px;
+    width: 100px;
+}
+.top-ten-cryptos li figure img {
+    max-width: 50px;
+}
+
+
+
+/*.start-page {
+    padding: 10%;
+}*/
+
+/* Top ten cryptos list
 .top-ten-container {
     margin-top: 30px;
 }
@@ -24,4 +126,4 @@
 }
 .top-ten-cryptos li figure img {
     max-width: 50px;
-}
+} */

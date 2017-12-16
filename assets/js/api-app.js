@@ -156,16 +156,21 @@ const apiView = {
             for (let i = 0; i < 10; i++) {
                 liElement = `<li>
                                 <a href="#" data-crypto-symbol="${apiApp.cryptocurrencyList[i].tickerSymbol}">
-                                    <figure class="figure">
+                                    <figure>
                                         <img src="${apiApp.cryptocurrencyList[i].iconPATH}" alt="${apiApp.cryptocurrencyList[i].cryptoName}">
-                                        <figcaption class="figure-caption text-center">${apiApp.cryptocurrencyList[i].tickerSymbol}</figcaption>
+                                        <figcaption class="text-center">${apiApp.cryptocurrencyList[i].tickerSymbol} <span class="sr-only">${apiApp.cryptocurrencyList[i].cryptoName}</span></figcaption>
                                     </figure>
                                 </a>
                             </li>`;
                 topTenListHTML += liElement;
             }
-            $('.text-loading').prop('hidden', true).attr('aria-hidden', 'true');
             $('.top-ten-cryptos').append(topTenListHTML);
+
+            // Remove loading text and show top 10 and search form
+            $('.text-loading').prop('hidden', true).attr('aria-hidden', 'true');
+            $('.top-ten-container').prop('hidden', false).attr('aria-hidden', 'false');
+            $('.search-form-container').prop('hidden', false).attr('aria-hidden', 'false');
+
         });
     },
     showCryptoDetails: function (cryptoSymbol) {
@@ -233,7 +238,5 @@ $(function () {
 
     // handle the search submit event - TBC after MVP
 
-    // Bootstrap Tooltips
-    //$('[data-toggle="tooltip"]').tooltip();
 });
 

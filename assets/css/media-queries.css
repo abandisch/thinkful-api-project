@@ -1,0 +1,29 @@
+/* Media Queries */
+@media screen and (min-width: 768px) {
+    /* Header */
+    header {
+        padding: 0.8em;
+    }
+    header h1 {
+        font-size: 2em;
+    }
+
+    /* Start page: Intro text */
+    .intro {
+        text-align: center;
+    }
+}
+
+@media screen and (min-width: 960px) {
+    .container {
+        padding: 0;
+    }
+}
+
+@media screen and (min-width: 834px) {
+    /* Start page: Top 10 cryptos */
+    .top-ten-cryptos {
+        width: 600px;
+        margin: 10px auto;
+    }
+}
