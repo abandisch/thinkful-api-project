@@ -22,7 +22,7 @@
 
         <main role="main">
             <div class="container">
-                <section class="start-page">
+                <section class="start-page" hidden aria-hidden="true">
                     <p class="intro text-justify">Get the latest Market Data, News Headlines and Reddit posts of your favourite Cryptocurrency all in one place.</p>
                     <p class="text-loading text-center"><em>Loading cryptocurrencies ... please wait</em> <i class="fa fa-spinner fa-pulse fa-fw"></i></p>
                     <div class="search-form-container text-center" hidden aria-hidden="true">
@@ -38,42 +38,24 @@
                         <ul class="top-ten-cryptos"></ul>
                     </div>
                 </section>
-                <section role="region" class="info-page" hidden aria-hidden="true">
-                <article role="article" class="js-market-data">
-                    <h3>Market Data <span class="js-crypto-name"></span></h3>
-                    <div class="row">
-                        <div class="col">
-                            <p class="text-center"><span>Price (USD):</span> <span class="js-usd-price">0.00</span></p>
+                <section role="region" class="info-page">
+                    <article role="article" class="js-market-data">
+                        <h3 class="info-heading">Market Data <span class="js-crypto-name"></span></h3>
+                        <div class="market-data-container">
+                            <p><span>Price (USD):</span> <span class="js-usd-price">0.00</span></p>
+                            <p><span>Price (BTC):</span> <span class="js-btc-price">0.00</span></p>
+                            <p><span>Market Cap (USD):</span> <span class="js-market-cap">0.00</span></p>
+                            <p><span>Volume (24h):</span> <span class="js-volume">0.00</span></p>
                         </div>
-                        <div class="col">
-                            <p class="text-center"><span>Price (BTC):</span> <span class="js-btc-price">0.00</span></p>
-                        </div>
-                        <div class="col">
-                            <p class="text-center"><span>Market Cap (USD):</span> <span class="js-market-cap">0.00</span></p>
-                        </div>
-                        <div class="col">
-                            <p class="text-center"><span>Volume (24h):</span> <span class="js-volume">0.00</span></p>
-                        </div>
-                    </div>
-                </article>
-                <article role="article" class="js-news-articles">
-                    <h3>News Headlines <span class="js-crypto-name"></span></h3>
-                    <!--<p class="text-info text-loading-articles"><em>Loading news articles ... please wait</em> <i class="fa fa-spinner fa-pulse fa-fw"></i></p>-->
-                    <div class="news-item">
-                        <div class="news-image">
-                            <img src="" alt="">
-                        </div>
-                        <div class="news-content">
-                            <a href="#">
-                                <h4 class="js-news-headline">News Headline</h4>
-                                <p class="js-news-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque semper nisl quis cursus posuere. Nulla pretium purus tortor, a porttitor sapien mollis id. Maecenas blandit lacus vel dolor sagittis molestie. Phasellus rhoncus faucibus ipsum, ut aliquet arcu auctor ac. </p>
-                            </a>
-                        </div>
-                    </div>
-                </article>
-                <article role="article" class="js-reddit-posts">
-                </article>
-            </section>
+                    </article>
+                    <article role="article" class="js-news-articles">
+                        <h3 class="info-heading">News Headlines <span class="js-crypto-name"></span></h3>
+                        <p class="text-loading-articles"><em>Loading news articles ... please wait</em> <i class="fa fa-spinner fa-pulse fa-fw"></i></p>
+                        <div class="news-article-container"></div>
+                    </article>
+                    <article role="article" class="js-reddit-posts">
+                    </article>
+                </section>
             </div>
         </main>
 

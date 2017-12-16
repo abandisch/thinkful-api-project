@@ -12,6 +12,25 @@
     .intro {
         text-align: center;
     }
+
+    /* News Articles */
+    .news-item {
+        display: flex;
+        justify-content: space-between;
+    }
+    .news-image img {
+        max-width: 220px;
+    }
+    .news-content {
+        margin: 0 0 0 10px;
+    }
+    .news-headline {
+        font-size: 1.3em;
+    }
+    .news-link {
+        float: right;
+        margin: 0;
+    }
 }
 
 @media screen and (min-width: 960px) {

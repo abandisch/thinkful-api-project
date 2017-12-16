@@ -68,7 +68,7 @@ main {
     padding: 5% 2%;
 }
 
-/* Start Page */
+/* --- Start Page --- */
 /* Intro text */
 .intro {
     text-align: justify;
@@ -107,23 +107,60 @@ main {
     max-width: 50px;
 }
 
-
-
-/*.start-page {
-    padding: 10%;
-}*/
-
-/* Top ten cryptos list
-.top-ten-container {
-    margin-top: 30px;
+/* --- Info Page --- */
+.info-page article {
+    margin-bottom: 30px;
 }
-.top-ten-cryptos {
-    list-style-type: none;
+
+/* Info page headings */
+.info-heading {
+    font-size: 1.5em;
+    position: relative;
 }
-.top-ten-cryptos li {
-    display: inline-block;
-    padding: 0 10px;
+.info-heading:after {
+    content: " ";
+    border-bottom: 2px solid #003366;
+    width: 80px;
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    color: #003366;
 }
-.top-ten-cryptos li figure img {
-    max-width: 50px;
-} */
+
+/* Market data */
+.market-data-container p > span:first-child {
+    font-weight: bold;
+}
+
+/* News Articles */
+.news-item {
+    margin: 15px 0;
+    border-bottom: 1px solid #d4d4d4;
+}
+.news-image img {
+    max-width: 100%;
+    height: auto;
+}
+.news-content {
+    padding-bottom: 10px;
+}
+.news-link {
+    text-decoration: none;
+    display: block;
+    margin: 0 auto;
+    background: #003366;
+    color: #fff;
+    width: 160px;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+.news-headline {
+    color: #222;
+    font-size: 1.2em;
+    text-align: justify;
+}
+.news-content p {
+    margin: 10px 0;
+    text-align: justify;
+    color: #222;
+}
