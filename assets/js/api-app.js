@@ -219,9 +219,11 @@ const apiView = {
             let newsArticleContainer = $('.news-article-container');
             let divElement = '';
             let newsArticlesHTML = '';
+            let count = 0; // Temporary counter not to show more than 5 articles
             newsArticles.forEach((article) => {
-                let publishedAtDate = new Date(article.publishedAt);
-                divElement = `<div class="news-item">
+                if (count < 5) {
+                    let publishedAtDate = new Date(article.publishedAt);
+                    divElement = `<div class="news-item">
                                  <div class="news-image">
                                      <img src="${article.urlToImage}" alt="News Article Image">
                                  </div>
@@ -232,7 +234,9 @@ const apiView = {
                                      <p class="news-source"><small>Published by ${article.source.name} on ${publishedAtDate.getDate()}/${publishedAtDate.getMonth() + 1}/${publishedAtDate.getFullYear()}</small></p>
                                  </div>
                              </div>`;
-                newsArticlesHTML += divElement;
+                    newsArticlesHTML += divElement;
+                    count++;
+                }
             });
             newsArticleContainer.append(newsArticlesHTML);
 
