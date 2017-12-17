@@ -29,16 +29,22 @@
     .news-content {
         margin: 0 0 0 10px;
         width: 70%;
+        position: relative;
     }
     .news-headline {
         font-size: 1.3em;
     }
     .news-link {
-        float: right;
         margin: 0;
+        position: absolute;
+        right: 0;
+        bottom: 0;
     }
     .news-source {
         text-align: left;
+        position: absolute;
+        left: 0;
+        bottom: 0;
     }
 }
 
