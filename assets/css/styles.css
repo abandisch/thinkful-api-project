@@ -212,8 +212,9 @@ main {
     text-decoration: none;
 }
 .reddit-post-domain {
-    font-size: 0.8em;
-    color: #9C3848;
+    font-size: 0.9em;
+    color: #9C3848 !important;
+    font-weight: normal;
 }
 .reddit-post-source {
     font-size: 0.9em;
