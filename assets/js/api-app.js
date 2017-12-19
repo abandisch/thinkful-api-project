@@ -40,14 +40,15 @@ function ApiQueryParams(apiURL, queryData, successCallback, failMessage, dataTyp
  */
 const apiApp = {
     cryptocurrencyList: [],
+    newsArticleList: [],
+    redditPostList: [],
     cryptocompareData: {},
     //cryptocompareAPIURL: 'https://min-api.cryptocompare.com/data/all/coinlist',
-    cryptocompareAPIURL: 'assets/js/cryptocompare.json', // Pre-downloaded this, since I only need images
+    cryptocompareAPIURL: 'assets/js/cryptocompare.json', // Pre-downloaded this, since I only need image URL's
     coinmarketcapAPIURL: 'https://api.coinmarketcap.com/v1/ticker/',
-    // newsapiorgAPIURL: 'https://newsapi.org/v2/everything',
-    newsapiorgAPIURL: 'assets/js/newsapi.json',
+    newsapiorgAPIURL: 'https://newsapi.org/v2/everything',
+    redditAPIURL: 'https://www.reddit.com/search.json',
     currentCrypto: null,
-    newsArticleList: [],
     callAPI: function(apiQueryData) {
         // Should execute the Ajax call to the API URL and provide any query data
         // Should execute the success call back if successful
@@ -145,6 +146,55 @@ const apiApp = {
             },
             'cannot load data from newsapi.org'
         ));
+    },
+    fetchRedditPosts: function (cryptoObject, callback) {
+        // Should query reddit.com for posts related to the given crypto
+        // Should execute the callback (which should display the reddit posts on the page)
+        this.callAPI(new ApiQueryParams(
+            this.redditAPIURL,
+            {
+                q: `${cryptoObject.cryptoName}`,
+                limit: 5,
+                sr_detail: false,
+                sort: 'relevance',
+                restrict_sr: true,
+                t: 'week'
+            },
+            (resultsData) => {
+                // Process the results and extract only what is needed from JSON
+                resultsData.data.children.forEach((post) => {
+
+                    let postObject = {
+                        domain: post.data.domain,
+                        numberOfComments: post.data.num_comments,
+                        permalink: post.data.permalink,
+                        subredditName: post.data.subreddit_name_prefixed,
+                        isSelf: post.data.is_self,
+                        title: post.data.title,
+                        url: post.data.url,
+                        showLocal: false
+                    };
+
+                    if (post.data.is_self || post.data.thumbnail === 'default') {
+                        postObject['thumbnailURL'] = 'assets/images/default-r-logo.png';
+                    } else {
+                        postObject['thumbnailURL'] = post.data.thumbnail;
+                    }
+
+                    if (post.data.is_self) {  // Self post
+                        postObject.showLocal = true;
+                        postObject.selfText = post.data.selftext.replace(/"/g, '&quot;');
+                    }
+
+                    if (post.data.domain === 'i.redd.it') { // image post
+                        postObject.showLocal = true;
+                    }
+                    this.redditPostList.push(postObject);
+                });
+                callback(this.redditPostList);
+            },
+            'cannot load data from reddit.com'
+        ));
     }
 };
 
@@ -199,6 +249,8 @@ const apiView = {
         // Display the news headlines
         this.displayNewsArticles(crypto);
 
+        // Display the reddit posts
+        this.displayRedditPosts(crypto);
     },
     displayMarketData: function (crypto) {
         // Update market data for the current crypto on the 'info' page
@@ -224,16 +276,16 @@ const apiView = {
                 if (count < 5) {
                     let publishedAtDate = new Date(article.publishedAt);
                     divElement = `<div class="news-item">
-                                 <div class="news-image">
-                                     <img src="${article.urlToImage}" alt="News Article Image">
-                                 </div>
-                                 <div class="news-content">
-                                     <h4 class="news-headline">${article.title}</h4>
-                                     <p class="news-description">${article.description}</p>
-                                     <a class="news-link" href="${article.url}" aria-label="Read Full Article on ${article.title}" target="_blank">Read Full Article <i class="fa fa-external-link" aria-hidden="true"></i></a>
-                                     <p class="news-source"><small>Published by ${article.source.name} on ${publishedAtDate.getDate()}/${publishedAtDate.getMonth() + 1}/${publishedAtDate.getFullYear()}</small></p>
-                                 </div>
-                             </div>`;
+                                     <div class="news-image">
+                                         <img src="${article.urlToImage}" alt="News Article Image">
+                                     </div>
+                                     <div class="news-content">
+                                         <h4 class="news-headline">${article.title}</h4>
+                                         <p class="news-description">${article.description}</p>
+                                         <a class="news-link" href="${article.url}" aria-label="Read Full Article on ${article.title}" target="_blank">Read Full Article <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                                         <p class="news-source"><small>Published by ${article.source.name} on ${publishedAtDate.getDate()}/${publishedAtDate.getMonth() + 1}/${publishedAtDate.getFullYear()}</small></p>
+                                     </div>
+                                 </div>`;
                     newsArticlesHTML += divElement;
                     count++;
                 }
@@ -244,6 +296,53 @@ const apiView = {
             $('.text-loading-articles').prop('hidden', true).attr('aria-hidden', 'true');
             newsArticleContainer.prop('hidden', false).attr('aria-hidden', 'false');
 
+        });
+    },
+    displayRedditPosts: function (crypto) {
+        // Should get the apiApp object to query reddit.com for relevant posts
+        // Should display these posts to the user
+        // if the post is an image, allow the user to load the image within the app
+        // if the post is a self.<subreddit> post, allow the user to load the text within the app
+        // if the post is an external URL (i.e. not reddit.com), pro
+        apiApp.fetchRedditPosts(crypto, function (redditPosts) {
+            let divElement = '';
+            let redditPostsHTML = '';
+            redditPosts.forEach((post) => {
+                let displayArea = '';
+
+                if (post.isSelf) { // self post - show text
+                    displayArea = `<div class="reddit-post-display-area" data-type="self-post" data-self-text="${post.selfText}" style="display: none;"></div>`;
+                }
+
+                if (post.domain === 'i.redd.it') { // image post - show image
+                    displayArea = `<div class="reddit-post-display-area" data-type="image" data-media-url="${post.url}" data-media-alt="${post.title}" style="display: none;"></div>`;
+                }
+
+                divElement = `<div class="reddit-post">
+                                <div class="top-content">
+                                    <div class="reddit-post-image">
+                                        <img src="${post.thumbnailURL}" alt="Reddit Post Image">
+                                    </div>
+                                    <div class="reddit-post-content">
+                                        <h4 class="reddit-post-headline"><a href="${post.url}" target="_blank">${post.title}</a> <a class="reddit-post-domain" href="https://www.reddit.com/domain/${post.domain}/" target="_blank"><small>(${post.domain})</small></a></h4>
+                                        <a class="reddit-post-show ${post.showLocal ? 'js-show-media-locally' : ''}" 
+                                           href="${post.showLocal ? '#' : post.url}" 
+                                           target="_blank" 
+                                           aria-label="${post.showLocal ? 'Show' : 'Open'} the post for ${post.title}">
+                                           ${post.showLocal ? 'Show' : 'Open'} Post <i class="fa ${post.showLocal ? 'fa-angle-double-down' : 'fa-external-link'}" aria-hidden="true"></i>
+                                        </a>
+                                        <p class="reddit-post-source"><a href="https://www.reddit.com${post.permalink}" target="_blank">${post.numberOfComments} Comments</a> on <a href="https://www.reddit.com/${post.subredditName}" target="_blank">${post.subredditName}</a></p>
+                                    </div>
+                                </div>
+                                ${displayArea}
+                            </div>`;
+                redditPostsHTML += divElement;
+            });
+
+            $('.text-loading-posts').prop('hidden', true).attr('aria-hidden', 'true');
+            $('.reddit-posts-container')
+                .append(redditPostsHTML)
+                .prop('hidden', false).attr('aria-hidden', 'false');
         });
     }
 };
@@ -257,7 +356,33 @@ const eventHandler = {
             event.preventDefault();
             let crypto = $(this).data('crypto-symbol');
             apiView.showCryptoDetails(crypto);
-        })
+        });
+    },
+    redditShowPostClickEvents: function () {
+        $('.reddit-posts-container').on('click', '.js-show-media-locally', function (event) {
+            event.preventDefault();
+            let displayArea = $(this).closest('.reddit-post').find('.reddit-post-display-area');
+
+            if(displayArea.is(":hidden")) {
+                if (displayArea.empty()) {
+                    if (displayArea.data('type') === 'image') {
+                        let imageURL = displayArea.data('media-url');
+                        let imageAlt = displayArea.data('media-alt');
+                        displayArea.html(`<img src="${imageURL}" alt="${imageAlt}">`);
+                    }
+
+                    if (displayArea.data('type') === 'self-post') {
+                        let selfText = marked(displayArea.data('self-text'));
+                        displayArea.html(`<div class="display-area-container">${selfText}</div>`);
+                    }
+                }
+                displayArea.slideDown('fast');
+                $(this).html('Close Post <i class="fa fa-angle-double-up" aria-hidden="true"></i>');
+            } else {
+                displayArea.slideUp('fast');
+                $(this).html('Show Post <i class="fa fa-angle-double-down" aria-hidden="true"></i>');
+            }
+        });
     }
 };
 
@@ -268,6 +393,9 @@ $(function () {
 
     // handle the click events on the main page
     eventHandler.mainPageClickEvents();
+
+    // handle Reddit post clicks
+    eventHandler.redditShowPostClickEvents();
 
     // handle the search submit event - TBC after MVP
 

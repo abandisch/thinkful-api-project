@@ -22,7 +22,7 @@
         </header>
         <main role="main">
             <div class="container">
-                <section class="start-page" >
+                <section class="start-page">
                     <p class="intro text-justify">Get the latest Market Data, News Headlines and Reddit posts of your favourite Cryptocurrency all in one place.</p>
                     <p class="text-loading text-center"><em>Loading cryptocurrencies ... please wait</em> <i class="fa fa-spinner fa-pulse fa-fw"></i></p>
                     <div class="search-form-container text-center" hidden aria-hidden="true">
@@ -50,13 +50,13 @@
                     </article>
                     <article role="article" class="js-news-articles">
                         <h3 class="info-heading">News Headlines <span class="js-crypto-name"></span></h3>
-                        <p class="text-loading-articles"><em>Loading news articles ... please wait</em> <i class="fa fa-spinner fa-pulse fa-fw"></i></p>
+                        <p class="text-loading-articles"><em>Loading News articles ... please wait</em> <i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i></p>
                         <div class="news-article-container"></div>
                     </article>
                     <article role="article" class="js-reddit-posts">
                         <h3 class="info-heading">Reddit Posts <span class="js-crypto-name"></span></h3>
-                        <p class="text-loading-articles"><em>Loading Reddit posts ... please wait</em> <i class="fa fa-spinner fa-pulse fa-fw"></i></p>
-                        <div class="news-article-container"></div>
+                        <p class="text-loading-posts"><em>Loading Reddit posts ... please wait</em> <i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i></p>
+                        <div class="reddit-posts-container"></div>
                     </article>
                 </section>
             </div>
@@ -68,6 +68,8 @@
     </footer>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- Marked JS - Process Markdown (https://github.com/chjj/marked) -->
+    <script src="assets/js/marked.min.js"></script>
     <!-- Custom JS -->
     <script src="assets/js/api-app.js"></script>
 </body>
