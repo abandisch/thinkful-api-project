@@ -144,7 +144,7 @@ const apiApp = {
                 sortBy: 'publishedAt',
                 apiKey: 'c148de8ea6b14e0da2a271e4b50f0f63',
                 language: 'en',
-                page: 1 // Track this and increment to 'load more'
+                page: 1 // Track this and increment to 'load more' - will add newsarrayindex, check if that is > 20, if so increment the page
             },
             (resultsData) => {
                 this.newsArticleList = resultsData.articles;
@@ -264,38 +264,30 @@ const apiView = {
         // Trading volume
         $('.js-volume').text('$' + Number.parseFloat(crypto.marketData.volume_24h_usd).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
     },
+    createNewsArticleDivElement: function (collectiveHTML, newsArticleObj) {
+        let publishedAtDate = new Date(newsArticleObj.publishedAt);
+        collectiveHTML += `<div class="news-item">
+                                     <div class="news-image">
+                                         <img src="${newsArticleObj.urlToImage}" alt="News Article Image">
+                                     </div>
+                                     <div class="news-content">
+                                         <h4 class="news-headline">${newsArticleObj.title}</h4>
+                                         <p class="news-description">${newsArticleObj.description}</p>
+                                         <a class="news-link" href="${newsArticleObj.url}" aria-label="Read Full Article on ${newsArticleObj.title}" target="_blank">Read Full Article <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                                         <p class="news-source"><small>Published by ${newsArticleObj.source.name} on ${publishedAtDate.getDate()}/${publishedAtDate.getMonth() + 1}/${publishedAtDate.getFullYear()}</small></p>
+                                     </div>
+                                 </div>`;
+        return collectiveHTML;
+    },
     displayNewsArticles: function (crypto) {
         // Should get the apiApp object to query the news headlines
         // Should display these news headlines to the user
         apiApp.fetchNewsHeadlines(crypto, function (newsArticles) {
-            let newsArticleContainer = $('.news-article-container');
-            let divElement = '';
-            let newsArticlesHTML = '';
-            let count = 0; // Temporary counter not to show more than 5 articles
-            newsArticles.forEach((article) => {
-                if (count < 5) {
-                    let publishedAtDate = new Date(article.publishedAt);
-                    divElement = `<div class="news-item">
-                                     <div class="news-image">
-                                         <img src="${article.urlToImage}" alt="News Article Image">
-                                     </div>
-                                     <div class="news-content">
-                                         <h4 class="news-headline">${article.title}</h4>
-                                         <p class="news-description">${article.description}</p>
-                                         <a class="news-link" href="${article.url}" aria-label="Read Full Article on ${article.title}" target="_blank">Read Full Article <i class="fa fa-external-link" aria-hidden="true"></i></a>
-                                         <p class="news-source"><small>Published by ${article.source.name} on ${publishedAtDate.getDate()}/${publishedAtDate.getMonth() + 1}/${publishedAtDate.getFullYear()}</small></p>
-                                     </div>
-                                 </div>`;
-                    newsArticlesHTML += divElement;
-                    count++;
-                }
-            });
-            newsArticleContainer.append(newsArticlesHTML);
-
+            // let newsArticleArrayIndex = 0; // Will incorporate properly this later when creating 'load more' functionality.
+            let newsArticlesHTML = newsArticles.slice(0, 5).reduce(apiView.createNewsArticleDivElement, '');
             // Remove loading text and show news articles
             $('.text-loading-articles').prop('hidden', true).attr('aria-hidden', 'true');
-            newsArticleContainer.prop('hidden', false).attr('aria-hidden', 'false');
-
+            $('.news-article-container').html(newsArticlesHTML).prop('hidden', false).attr('aria-hidden', 'false');
         });
     },
     createRedditPostDivElement: function (collectiveHTML, redditPostObj) {
