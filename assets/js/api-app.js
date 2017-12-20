@@ -258,7 +258,7 @@ const apiView = {
         // USD price
         $('.js-usd-price').text('$' + Number.parseFloat(crypto.marketData.price_usd).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
         // BTC price
-        $('.js-btc-price').text(Number.parseFloat(crypto.marketData.price_btc).toFixed(2));
+        $('.js-btc-price').text(Number.parseFloat(crypto.marketData.price_btc).toFixed(8));
         // Market Cap
         $('.js-market-cap').text('$' + Number.parseFloat(crypto.marketData.market_cap_usd).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
         // Trading volume
