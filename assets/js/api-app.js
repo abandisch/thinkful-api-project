@@ -298,6 +298,35 @@ const apiView = {
 
         });
     },
+    createRedditPostDivElement: function (collectiveHTML, redditPostObj) {
+        let displayArea = '';
+
+        if (redditPostObj.is_self) { // self post - show text
+            displayArea = `<div class="reddit-post-display-area" data-type="self-post" data-self-text="${redditPostObj.selfText}" style="display: none;"></div>`;
+        } else if (redditPostObj.domain === 'i.redd.it') { // image post - show image
+            displayArea = `<div class="reddit-post-display-area" data-type="image" data-media-url="${redditPostObj.url}" data-media-alt="${redditPostObj.title}" style="display: none;"></div>`;
+        }
+
+        collectiveHTML += `<div class="reddit-post">
+                                <div class="top-content">
+                                    <div class="reddit-post-image">
+                                        <img src="${redditPostObj.thumbnailURL}" alt="Reddit Post Image">
+                                    </div>
+                                    <div class="reddit-post-content">
+                                        <h4 class="reddit-post-headline"><a href="${redditPostObj.url}" target="_blank">${redditPostObj.title}</a> <a class="reddit-post-domain" href="https://www.reddit.com/domain/${redditPostObj.domain}/" target="_blank"><small>(${redditPostObj.domain})</small></a></h4>
+                                        <a class="reddit-post-show ${redditPostObj.showLocal ? 'js-show-media-locally' : ''}" 
+                                           href="${redditPostObj.showLocal ? '#' : redditPostObj.url}" 
+                                           target="_blank" 
+                                           aria-label="${redditPostObj.showLocal ? 'Show' : 'Open'} the post for ${redditPostObj.title}">
+                                           ${redditPostObj.showLocal ? 'Show' : 'Open'} Post <i class="fa ${redditPostObj.showLocal ? 'fa-angle-double-down' : 'fa-external-link'}" aria-hidden="true"></i>
+                                        </a>
+                                        <p class="reddit-post-source"><a href="https://www.reddit.com${redditPostObj.permalink}" target="_blank">${redditPostObj.num_comments} Comments</a> on <a href="https://www.reddit.com/${redditPostObj.subreddit_name_prefixed}" target="_blank">${redditPostObj.subreddit_name_prefixed}</a></p>
+                                    </div>
+                                </div>
+                                ${displayArea}
+                            </div>`;
+        return collectiveHTML;
+    },
     displayRedditPosts: function (crypto) {
         // Should get the apiApp object to query reddit.com for relevant posts
         // Should display these posts to the user
@@ -305,39 +334,8 @@ const apiView = {
         // if the post is a self.<subreddit> post, allow the user to load the text within the app
         // if the post is an external URL (i.e. not reddit.com), pro
         apiApp.fetchRedditPosts(crypto, function (redditPosts) {
-            let divElement = '';
-            let redditPostsHTML = '';
-            redditPosts.forEach((post) => {
-                let displayArea = '';
 
-                if (post.is_self) { // self post - show text
-                    displayArea = `<div class="reddit-post-display-area" data-type="self-post" data-self-text="${post.selfText}" style="display: none;"></div>`;
-                }
-
-                if (post.domain === 'i.redd.it') { // image post - show image
-                    displayArea = `<div class="reddit-post-display-area" data-type="image" data-media-url="${post.url}" data-media-alt="${post.title}" style="display: none;"></div>`;
-                }
-
-                divElement = `<div class="reddit-post">
-                                <div class="top-content">
-                                    <div class="reddit-post-image">
-                                        <img src="${post.thumbnailURL}" alt="Reddit Post Image">
-                                    </div>
-                                    <div class="reddit-post-content">
-                                        <h4 class="reddit-post-headline"><a href="${post.url}" target="_blank">${post.title}</a> <a class="reddit-post-domain" href="https://www.reddit.com/domain/${post.domain}/" target="_blank"><small>(${post.domain})</small></a></h4>
-                                        <a class="reddit-post-show ${post.showLocal ? 'js-show-media-locally' : ''}" 
-                                           href="${post.showLocal ? '#' : post.url}" 
-                                           target="_blank" 
-                                           aria-label="${post.showLocal ? 'Show' : 'Open'} the post for ${post.title}">
-                                           ${post.showLocal ? 'Show' : 'Open'} Post <i class="fa ${post.showLocal ? 'fa-angle-double-down' : 'fa-external-link'}" aria-hidden="true"></i>
-                                        </a>
-                                        <p class="reddit-post-source"><a href="https://www.reddit.com${post.permalink}" target="_blank">${post.num_comments} Comments</a> on <a href="https://www.reddit.com/${post.subreddit_name_prefixed}" target="_blank">${post.subreddit_name_prefixed}</a></p>
-                                    </div>
-                                </div>
-                                ${displayArea}
-                            </div>`;
-                redditPostsHTML += divElement;
-            });
+            let redditPostsHTML = redditPosts.reduce(apiView.createRedditPostDivElement, '');
 
             $('.text-loading-posts').prop('hidden', true).attr('aria-hidden', 'true');
             $('.reddit-posts-container')
