@@ -46,6 +46,7 @@ const apiApp = {
     //cryptocompareAPIURL: 'https://min-api.cryptocompare.com/data/all/coinlist',
     cryptocompareAPIURL: 'assets/js/cryptocompare.json', // Pre-downloaded this, since I only need image URL's
     coinmarketcapAPIURL: 'https://api.coinmarketcap.com/v1/ticker/',
+    // coinmarketcapAPIURL: 'resources/test-json/coinmarketcap.json', // Used for testing, so I don't spam the API
     newsapiorgAPIURL: 'https://newsapi.org/v2/everything',
     redditAPIURL: 'https://www.reddit.com/search.json',
     currentCrypto: null,
@@ -68,37 +69,35 @@ const apiApp = {
             alert(`${apiQueryData.failMessage}`);
         });
     },
+    createCryptoCurrency: function (cryptoObj) {
+        // Create the CryptoCurrency object from coinmarketcap.com API json result object
+        const {price_usd, price_btc, market_cap_usd} = cryptoObj;
+        const volume_24h_usd = cryptoObj['24h_volume_usd'];
+        let crypto = new CryptoCurrency(cryptoObj.name, cryptoObj.symbol, cryptoObj.rank, {price_usd, price_btc, market_cap_usd, volume_24h_usd});
+
+        // Set the URL of the crypto icon - there are special cases due to inconsistent Symbol usage between Coinmarketcap and Cryptocompare
+        // Only taking care of IOTA, since it's in top ten market cap, rest will get a generic icon if there is no one to one mapping between Coinmarketcap and Cryptocompare
+        if (cryptoObj.symbol === 'MIOTA') {
+            crypto.iconPATH = `https://www.cryptocompare.com/${this.cryptocompareData["IOT"].ImageUrl}`;
+        } else {
+            crypto.iconPATH = !!this.cryptocompareData[cryptoObj.symbol] ? `https://www.cryptocompare.com${this.cryptocompareData[cryptoObj.symbol].ImageUrl}` : 'assets/images/generic-icon.jpg';
+        }
+        return crypto;
+    },
     fetchCoinData: function (apiViewCallback) {
-        this.callAPI(new ApiQueryParams(
+        // Should query coinmarketcap.com API for the top ten cryptos
+        // Should create a CryptoCurrency object for each
+        // Should populate the cryptocurrencyList array with all ten CryptoCurrency objects
+        const apiQueryParams = new ApiQueryParams(
             this.coinmarketcapAPIURL,
             { limit: 10 },
-            (apiData) => {
-                for (let key in apiData) {
-                    // Create the CryptoCurrency object
-                    let crypto = new CryptoCurrency(apiData[key].name,
-                                                    apiData[key].symbol,
-                                                    apiData[key].rank,
-                                                    {
-                                                        price_usd: apiData[key].price_usd,
-                                                        price_btc: apiData[key].price_btc,
-                                                        market_cap_usd: apiData[key].market_cap_usd,
-                                                        volume_24h_usd: apiData[key]['24h_volume_usd']
-                                                    });
-
-                    // Set the URL of the crypto icon - there are special cases due to inconsistent Symbol usage between Coinmarketcap and Cryptocompare
-                    // Only taking care of IOTA, since it's in top ten market cap, rest will get a generic icon if there is no one to one mapping between Coinmarketcap and Cryptocompare
-                    if (apiData[key].symbol === 'MIOTA') {
-                        crypto.iconPATH = `https://www.cryptocompare.com/${apiApp.cryptocompareData["IOT"].ImageUrl}`;
-                    } else {
-                        crypto.iconPATH = !!this.cryptocompareData[apiData[key].symbol] ? `https://www.cryptocompare.com${this.cryptocompareData[apiData[key].symbol].ImageUrl}` : 'assets/images/generic-icon.jpg';
-                    }
-                    // add the CryptoCurrency object to the cryptocurrencyList array
-                    this.cryptocurrencyList.push(crypto);
-                }
+            (coinmarketcapApiData) => {
+                this.cryptocurrencyList = coinmarketcapApiData.map(this.createCryptoCurrency, this);
                 apiViewCallback();
             },
             'Unable to fetch coin data from coinmarketcap.com API. Please try again later.'
-        ));
+        );
+        this.callAPI(apiQueryParams);
     },
     initCryptoCurrencyList: function (apiViewCallback) {
         // Should query Cryptocompare.com to get crypto data, which includes images for each crypto (the only reason to query this API)
