@@ -91,22 +91,22 @@ const apiApp = {
         }
         return crypto;
     },
-    fetchCoinData: function (apiViewCallback) {
+    fetchCoinData: function (numberOfCoins, apiViewCallback) {
         // Should query coinmarketcap.com API for the top ten cryptos
         // Should create a CryptoCurrency object for each
         // Should populate the cryptocurrencyList array with all ten CryptoCurrency objects
         const apiQueryParams = new ApiQueryParams(
             this.coinmarketcapAPIURL,
-            { limit: 10 },
+            { limit: numberOfCoins },
             (coinmarketcapApiData) => {
                 this.cryptocurrencyList = coinmarketcapApiData.map(this.createCryptoCurrency, this);
-                apiViewCallback();
+                apiViewCallback(this.cryptocurrencyList);
             },
             'Unable to fetch coin data from coinmarketcap.com API. Please try again later.'
         );
         this.callAPI(apiQueryParams);
     },
-    initCryptoCurrencyList: function (apiViewCallback) {
+    initCryptoCurrencyList: function (numberOfCoins, apiViewCallback) {
         // Should query Cryptocompare.com to get crypto data, which includes images for each crypto (the only reason to query this API)
         // Then should call the fetchCoinData, which will query coinmarketcap.com for crypto market data
         // That callback function should build the array of CryptoCurrencies and then call apiViewCallback
@@ -115,7 +115,7 @@ const apiApp = {
                         { /* no parameters */ },
                         (cryptocompareApiData) => {
                             this.cryptocompareData = cryptocompareApiData.Data;
-                            this.fetchCoinData(apiViewCallback)
+                            this.fetchCoinData(numberOfCoins, apiViewCallback)
                         },
                         'Unable to fetch cryptocurrency list from cryptocompare.com API. Please try again later.'
                     ));
@@ -202,31 +202,34 @@ const apiApp = {
  * Object to control the view of the app
  */
 const apiView = {
-    initMainPage: function () {
-        apiApp.initCryptoCurrencyList(function () {
-            // Setup top ten list on main page
-            // Show 'loading' text and remove it once the load is complete
-            let liElement;
-            let topTenListHTML = '';
-            for (let i = 0; i < 10; i++) {
-                liElement = `<li>
-                                <a href="#" data-crypto-symbol="${apiApp.cryptocurrencyList[i].tickerSymbol}">
+    createCryptoCurrencyLiElement: function (collectiveHTML, cryptoCurrencyObj) {
+        collectiveHTML += `<li>
+                                <a href="#" data-crypto-symbol="${cryptoCurrencyObj.tickerSymbol}">
                                     <figure>
-                                        <img src="${apiApp.cryptocurrencyList[i].iconPATH}" alt="${apiApp.cryptocurrencyList[i].cryptoName}">
-                                        <figcaption class="text-center">${apiApp.cryptocurrencyList[i].tickerSymbol} <span class="sr-only">${apiApp.cryptocurrencyList[i].cryptoName}</span></figcaption>
+                                        <img src="${cryptoCurrencyObj.iconPATH}" alt="${cryptoCurrencyObj.cryptoName}">
+                                        <figcaption class="text-center">${cryptoCurrencyObj.tickerSymbol} <span class="sr-only">${cryptoCurrencyObj.cryptoName}</span></figcaption>
                                     </figure>
                                 </a>
                             </li>`;
-                topTenListHTML += liElement;
-            }
-            $('.top-ten-cryptos').append(topTenListHTML);
+        return collectiveHTML;
+    },
+    initMainPage: function () {
+        // Setup top ten list on main page
+        // Show 'loading' text and remove it once the load is complete
+        // Remove loading text and show top 10 and search form
 
-            // Remove loading text and show top 10 and search form
-            $('.text-loading').prop('hidden', true).attr('aria-hidden', 'true');
-            $('.top-ten-container').prop('hidden', false).attr('aria-hidden', 'false');
-            $('.search-form-container').prop('hidden', false).attr('aria-hidden', 'false');
+        const initCryptoListArgs = {
+            numberOfCryptosToFetch: 10,
+            callback: function(cryptocurrencyList) {
+                let topTenListHTML = cryptocurrencyList.reduce(apiView.createCryptoCurrencyLiElement, '');
+                $('.top-ten-cryptos').append(topTenListHTML);
+                $('.text-loading').prop('hidden', true).attr('aria-hidden', 'true');
+                $('.top-ten-container').prop('hidden', false).attr('aria-hidden', 'false');
+                $('.search-form-container').prop('hidden', false).attr('aria-hidden', 'false');
+          }
+        };
 
-        });
+        apiApp.initCryptoCurrencyList(initCryptoListArgs.numberOfCryptosToFetch, initCryptoListArgs.callback);
     },
     showCryptoDetails: function (cryptoSymbol) {
         // Should hide the main page
