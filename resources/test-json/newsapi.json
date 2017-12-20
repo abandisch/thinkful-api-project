@@ -1,0 +1,246 @@
+{
+  "status": "ok",
+  "totalResults": 266,
+  "articles": [
+    {
+      "source": {
+        "id": "crypto-coins-news",
+        "name": "Crypto Coins News"
+      },
+      "author": "Tom Clancy",
+      "title": "IQeon – A Project That Will Open New Opportunities for the Game Community",
+      "description": "The post IQeon – A Project That Will Open New Opportunities for the Game Community appeared first on CCN This is a paid-for submitted press release. CCN does not endorse, nor is responsible for any material included below and isn’t responsible for any damages…",
+      "url": "https://www.ccn.com/iqeon-project-will-open-new-opportunities-game-community/",
+      "urlToImage": "https://www.ccn.com/wp-content/uploads/2017/12/IQEON5.png",
+      "publishedAt": "2017-12-20T12:29:46Z"
+    },
+    {
+      "source": {
+        "id": "financial-post",
+        "name": "Financial Post"
+      },
+      "author": "Bloomberg News",
+      "title": "Want to issue a red-hot ICO? Rule No. 1 is do very little work",
+      "description": "'There's a massive bubble here that's going to pop in an ugly way'",
+      "url": "http://business.financialpost.com/entrepreneur/want-to-issue-a-red-hot-ico-rule-no-1-is-do-very-little-work",
+      "urlToImage": "https://financialpostcom.files.wordpress.com/2017/12/abitcoin_warning.jpg",
+      "publishedAt": "2017-12-20T12:13:38Z"
+    },
+    {
+      "source": {
+        "id": "fortune",
+        "name": "Fortune"
+      },
+      "author": "Bloomberg",
+      "title": "Founder of Bitcoin Rival Litecoin Sells His Cryptocurrency After 7,500% Rally",
+      "description": "Litecoin founder Charlie Lee said on Reddit that he sold and donated his cryptocurrency holdings.",
+      "url": "http://fortune.com/2017/12/20/charlie-lee-litecoin-cryptocurrency/",
+      "urlToImage": "https://fortunedotcom.files.wordpress.com/2017/12/1x-14.jpg",
+      "publishedAt": "2017-12-20T12:07:11Z"
+    },
+    {
+      "source": {
+        "id": "bbc-news",
+        "name": "BBC News"
+      },
+      "author": "https://www.facebook.com/bbcnews",
+      "title": "Bitcoin Cash deals frozen as insider trading is probed",
+      "description": "Coinbase is investigating whether staff ignored orders to keep its Bitcoin Cash launch secret.",
+      "url": "http://www.bbc.co.uk/news/technology-42425857",
+      "urlToImage": "https://ichef-1.bbci.co.uk/news/1024/cpsprodpb/3ECF/production/_99297061_e0f53083-faad-4e88-9e3f-ab043dd96a88.jpg",
+      "publishedAt": "2017-12-20T12:06:59Z"
+    },
+    {
+      "source": {
+        "id": "cnbc",
+        "name": "CNBC"
+      },
+      "author": "Evelyn Cheng",
+      "title": "The late-stage equity bull market could explain a mania like bitcoin",
+      "description": "The bitcoin craze is just another sign that U.S. stocks may be nearing the end of their latest run higher, several market analysts say.",
+      "url": "https://www.cnbc.com/2017/12/19/bull-market-could-explain-a-mania-like-bitcoin.html",
+      "urlToImage": "https://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2017/12/18/104905613-GettyImages-894537888.1910x1000.jpg",
+      "publishedAt": "2017-12-20T11:00:00Z"
+    },
+    {
+      "source": {
+        "id": "bloomberg",
+        "name": "Bloomberg"
+      },
+      "author": "Julie Verhage",
+      "title": "Five Things You Need to Know to Start Your Day",
+      "description": "Get caught up on what's moving markets in Asia.",
+      "url": "https://www.bloomberg.com/news/articles/2017-12-19/five-things-you-need-to-know-to-start-your-day-jbe9a31c",
+      "urlToImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iDfZjxP0vlAs/v0/1200x800.jpg",
+      "publishedAt": "2017-12-19T23:23:55Z"
+    },
+    {
+      "source": {
+        "id": "cnbc",
+        "name": "CNBC"
+      },
+      "author": "Michael Sheetz",
+      "title": "Bitcoin-related names dominated among website domains registered in November",
+      "description": "Bitcoin's popularity is dominating new websites being registered related to cryptocurrency.",
+      "url": "https://www.cnbc.com/2017/12/19/bitcoin-related-names-dominated-among-website-domains-registered-in-november.html",
+      "urlToImage": "https://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2016/05/25/103665779-GettyImages-563960579.1910x1000.jpg",
+      "publishedAt": "2017-12-19T18:52:00Z"
+    },
+    {
+      "source": {
+        "id": "techcrunch",
+        "name": "TechCrunch"
+      },
+      "author": "Fitz Tepper",
+      "title": "dYdX is a decentralized protocol for cryptocurrency derivatives",
+      "description": "While some financial derivatives like futures trading are slowly coming to Bitcoin, we’re still a long time away from these financial products being widely available for the entire cryptocurrency asset class. So dydX is building a decentralized protocol for d…",
+      "url": "https://techcrunch.com/2017/12/19/dydx-is-a-decentralized-protocol-for-cryptocurrency-derivatives/",
+      "urlToImage": "https://tctechcrunch2011.files.wordpress.com/2017/12/dydx.jpg",
+      "publishedAt": "2017-12-19T17:20:11Z"
+    },
+    {
+      "source": {
+        "id": "business-insider",
+        "name": "Business Insider"
+      },
+      "author": "Graham Rapier",
+      "title": "CRYPTO INSIDER: Bitcoin is the 'most crowded' trade in the world",
+      "description": "Welcome to Crypto Insider, Business Insider’s roundup of all the bitcoin and cryptocurrency news you need to know today. Sign up here to get this email delivered direct to your inbox. Bitcoin is officially the most crowded trade in the world, according to a f…",
+      "url": "http://www.businessinsider.com/bitcoin-cryptocurencies-today-december-19-2017-12",
+      "urlToImage": "http://static6.businessinsider.com/image/57b2ef34ce38f284328b6ca3-1190-625/crypto-insider-bitcoin-is-the-most-crowded-trade-in-the-world.jpg",
+      "publishedAt": "2017-12-19T15:15:28Z"
+    },
+    {
+      "source": {
+        "id": "business-insider",
+        "name": "Business Insider"
+      },
+      "author": "grapier@businessinsider.com (Graham Rapier), Graham Rapier",
+      "title": "CRYPTO INSIDER: Bitcoin is the 'most crowded' trade in the world",
+      "description": "Welcome to Crypto Insider, Business Insider’s roundup of all the bitcoin and cryptocurrency news you need to know today. Sign up here to get this email delivered direct to your inbox. Bitcoin is officially the most crowded trade in the world, according to a f…",
+      "url": "http://markets.businessinsider.com/currencies/news/bitcoin-cryptocurencies-today-december-19-2017-12-1011644810",
+      "urlToImage": "http://static2.businessinsider.com/image/5a3929664aa6b53c358b53c8-2000/gettyimages-458510730.jpg",
+      "publishedAt": "2017-12-19T15:15:28Z"
+    },
+    {
+      "source": {
+        "id": "business-insider",
+        "name": "Business Insider"
+      },
+      "author": "Graham Rapier",
+      "title": "Bitcoin falls below $18,000 milestone",
+      "description": "Bitcoin fell below the $18,000 per coin benchmark Tuesday morning, down roughly 5.8% in the last 24 hours. In the same period, the cryptocurrency — which now has a market cap of $304.43 billion — reached as high as $19,730 per coin. The price is roughly back …",
+      "url": "http://www.businessinsider.com/bitcoin-price-falls-below-18000-milestone-2017-12",
+      "urlToImage": "http://static2.businessinsider.com/image/5a39206bb0bcd533198b5ab2-1190-625/bitcoin-falls-below-18000-milestone.jpg",
+      "publishedAt": "2017-12-19T14:29:39Z"
+    },
+    {
+      "source": {
+        "id": "business-insider",
+        "name": "Business Insider"
+      },
+      "author": "Graham Rapier",
+      "title": "Bitcoin falls below $18,000 milestone",
+      "description": "Bitcoin fell below the $18,000 per coin benchmark Tuesday morning, down roughly 5.8% in the last 24 hours. In the same period, the cryptocurrency — which now has a market cap of $304.43 billion — reached as high as $19,730 per coin. The price is roughly back …",
+      "url": "http://markets.businessinsider.com/news/stocks/bitcoin-price-falls-below-18000-milestone-2017-12-1011643688",
+      "urlToImage": "http://static3.businessinsider.com/image/5a3921ff4aa6b519158b5b23-875/screen-shot-2017-12-19-at-92730-am.png",
+      "publishedAt": "2017-12-19T14:29:39Z"
+    },
+    {
+      "source": {
+        "id": "crypto-coins-news",
+        "name": "Crypto Coins News"
+      },
+      "author": "Tom Clancy",
+      "title": "Bankera: Banking Innovation ICO Raises $38 Million from 16,000 Backers",
+      "description": "The post Bankera: Banking Innovation ICO Raises $38 Million from 16,000 Backers appeared first on CCN This is a submitted sponsored story. CCN urges readers to conduct their own research with due diligence into the company, product or service mentioned in the…",
+      "url": "https://www.ccn.com/bankera-banking-innovation-ico-raises-38-million-16000-backers/",
+      "urlToImage": "https://www.ccn.com/wp-content/uploads/2017/12/bankera.png",
+      "publishedAt": "2017-12-19T14:02:58Z"
+    },
+    {
+      "source": {
+        "id": "crypto-coins-news",
+        "name": "Crypto Coins News"
+      },
+      "author": "Tom Clancy",
+      "title": "EthereCash: Blockchain-Based Lending Solution to Make Loans Simple and Less Risky",
+      "description": "The post EthereCash: Blockchain-Based Lending Solution to Make Loans Simple and Less Risky appeared first on CCN This is a submitted sponsored story. CCN urges readers to conduct their own research with due diligence into the company, product or service menti…",
+      "url": "https://www.ccn.com/etherecash-blockchain-based-lending-solution-make-loans-simple-less-risky/",
+      "urlToImage": "https://www.ccn.com/wp-content/uploads/2017/12/image1-8.png",
+      "publishedAt": "2017-12-19T13:55:26Z"
+    },
+    {
+      "source": {
+        "id": "cnbc",
+        "name": "CNBC"
+      },
+      "author": "Ryan Browne",
+      "title": "Big transactions fees are a problem for bitcoin — but there could be a solution",
+      "description": "People are currently paying $28 on average to make transactions using bitcoin, according to data by BitInfoCharts.",
+      "url": "https://www.cnbc.com/2017/12/19/big-transactions-fees-are-a-problem-for-bitcoin.html",
+      "urlToImage": "https://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2017/12/13/104896511-GettyImages-890098682.1910x1000.jpg",
+      "publishedAt": "2017-12-19T13:09:00Z"
+    },
+    {
+      "source": {
+        "id": "crypto-coins-news",
+        "name": "Crypto Coins News"
+      },
+      "author": "Mark Kirker",
+      "title": "Bitcoin’s Economic Moat: The Network Effect",
+      "description": "The post Bitcoin’s Economic Moat: The Network Effect appeared first on CCN Recently, the Winklevoss twins stated that Bitcoin will ultimately become a trillion dollar asset. The twin’s primary argument is the network effect of bitcoin, ultimately, will create…",
+      "url": "https://www.ccn.com/bitcoins-economic-moat-network-effect/",
+      "urlToImage": "https://www.ccn.com/wp-content/uploads/2017/11/Bitcoin-gw.jpg",
+      "publishedAt": "2017-12-19T12:55:34Z"
+    },
+    {
+      "source": {
+        "id": "crypto-coins-news",
+        "name": "Crypto Coins News"
+      },
+      "author": "Tom Clancy",
+      "title": "Segwit2X To Be Reborn in Coming Weeks Ahead",
+      "description": "The post Segwit2X To Be Reborn in Coming Weeks Ahead appeared first on CCN This is a paid-for submitted press release. CCN does not endorse, nor is responsible for any material included below and isn’t responsible for any damages or losses connected with any …",
+      "url": "https://www.ccn.com/segwit2x-reborn-coming-weeks-ahead/",
+      "urlToImage": "https://www.ccn.com/wp-content/uploads/2017/12/photo_2017-12-18_19-47-14.jpg",
+      "publishedAt": "2017-12-19T11:51:17Z"
+    },
+    {
+      "source": {
+        "id": "cnbc",
+        "name": "CNBC"
+      },
+      "author": "Arjun Kharpal",
+      "title": "Traders might be misunderstanding the cryptocurrency craze and it could come back to bite",
+      "description": "Cryptocurrencies like bitcoin and ether are being lumped together in one basket which could be dangerous.",
+      "url": "https://www.cnbc.com/2017/12/19/traders-might-be-misunderstanding-the-cryptocurrency-craze.html",
+      "urlToImage": "https://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2017/12/12/104893394-GettyImages-873696080.1910x1000.jpg",
+      "publishedAt": "2017-12-19T06:00:00Z"
+    },
+    {
+      "source": {
+        "id": "cbs-news",
+        "name": "CBS News"
+      },
+      "author": "Jonathan Berr",
+      "title": "Bitcoin is hardly the only cryptocurrency investment",
+      "description": "Many other digital currencies beckon, as do companies that supply the underlying blockchain technology",
+      "url": "https://www.cbsnews.com/news/bitcoin-is-hardly-the-only-cryptocurrency-investment/",
+      "urlToImage": "https://cbsnews3.cbsistatic.com/hub/i/r/2015/02/02/24511b6f-0969-4fb4-b427-3ab1c54eb52a/thumbnail/1200x630/074a11814b1118be1d13f18dca1a1ff3/istock000051000276large.jpg",
+      "publishedAt": "2017-12-18T21:37:54Z"
+    },
+    {
+      "source": {
+        "id": "fortune",
+        "name": "Fortune"
+      },
+      "author": "Spencer Bogart",
+      "title": "Commentary: 3 Reasons Bitcoin Is Worth So Much Right Now",
+      "description": "It will soon attract mass appeal.",
+      "url": "http://fortune.com/2017/12/18/bitcoin-value-blockchain-capital/",
+      "urlToImage": "https://fortunedotcom.files.wordpress.com/2017/12/gettyimages-894537956-e1513628092995.jpg",
+      "publishedAt": "2017-12-18T20:22:15Z"
+    }
+  ]
+}
