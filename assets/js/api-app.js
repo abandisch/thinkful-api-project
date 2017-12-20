@@ -35,6 +35,11 @@ function ApiQueryParams(apiURL, queryData, successCallback, failMessage, dataTyp
     this.timeout = !!timeout ? timeout : 10;
 }
 
+// JSON results from each API used for testing/development, so I don't spam the API's when testing/developing
+const TEST_CoinmarketcapAPIURL = 'resources/test-json/coinmarketcap.json';
+const TEST_NewsorgAPIURL = 'resources/test-json/newsapi.json';
+const TEST_RedditAPIURL = 'resources/test-json/reddit.json';
+
 /**
  * Object to manage API requests and data
  */
@@ -45,10 +50,12 @@ const apiApp = {
     cryptocompareData: {},
     //cryptocompareAPIURL: 'https://min-api.cryptocompare.com/data/all/coinlist',
     cryptocompareAPIURL: 'assets/js/cryptocompare.json', // Pre-downloaded this, since I only need image URL's
-    coinmarketcapAPIURL: 'https://api.coinmarketcap.com/v1/ticker/',
-    // coinmarketcapAPIURL: 'resources/test-json/coinmarketcap.json', // Used for testing, so I don't spam the API
-    newsapiorgAPIURL: 'https://newsapi.org/v2/everything',
-    redditAPIURL: 'https://www.reddit.com/search.json',
+    // coinmarketcapAPIURL: 'https://api.coinmarketcap.com/v1/ticker/',
+    coinmarketcapAPIURL: TEST_CoinmarketcapAPIURL,
+    // newsapiorgAPIURL: 'https://newsapi.org/v2/everything',
+    newsapiorgAPIURL: TEST_NewsorgAPIURL,
+    // redditAPIURL: 'https://www.reddit.com/search.json',
+    redditAPIURL: TEST_RedditAPIURL,
     currentCrypto: null,
     callAPI: function(apiQueryData) {
         // Should execute the Ajax call to the API URL and provide any query data
@@ -146,6 +153,28 @@ const apiApp = {
             'cannot load data from newsapi.org'
         ));
     },
+    createRedditPostObject: function (postObjData) {
+        const { domain, num_comments, permalink, subreddit_name_prefixed, is_self, title, url } = postObjData.data;
+        let redditPostObject = { domain, num_comments, permalink, subreddit_name_prefixed, is_self, title, url };
+        redditPostObject.showLocal = false;
+
+        // Set the URL of the image. If it's a self post use default reddit logo, else use the image URL provided by the API
+        if (redditPostObject.is_self || postObjData.data.thumbnail === 'default') {
+            redditPostObject['thumbnailURL'] = 'assets/images/default-r-logo.png';
+        } else {
+            redditPostObject['thumbnailURL'] = postObjData.data.thumbnail;
+        }
+
+        if (redditPostObject.is_self) {  // Self post
+            redditPostObject.showLocal = true;
+            redditPostObject.selfText = postObjData.data.selftext.replace(/"/g, '&quot;');
+        }
+
+        if (redditPostObject.domain === 'i.redd.it') { // image post
+            redditPostObject.showLocal = true;
+        }
+        return redditPostObject;
+    },
     fetchRedditPosts: function (cryptoObject, callback) {
         // Should query reddit.com for posts related to the given crypto
         // Should execute the callback (which should display the reddit posts on the page)
@@ -159,37 +188,9 @@ const apiApp = {
                 restrict_sr: true,
                 t: 'week'
             },
-            (resultsData) => {
+            (redditAPIData) => {
                 // Process the results and extract only what is needed from JSON
-                resultsData.data.children.forEach((post) => {
-
-                    let postObject = {
-                        domain: post.data.domain,
-                        numberOfComments: post.data.num_comments,
-                        permalink: post.data.permalink,
-                        subredditName: post.data.subreddit_name_prefixed,
-                        isSelf: post.data.is_self,
-                        title: post.data.title,
-                        url: post.data.url,
-                        showLocal: false
-                    };
-
-                    if (post.data.is_self || post.data.thumbnail === 'default') {
-                        postObject['thumbnailURL'] = 'assets/images/default-r-logo.png';
-                    } else {
-                        postObject['thumbnailURL'] = post.data.thumbnail;
-                    }
-
-                    if (post.data.is_self) {  // Self post
-                        postObject.showLocal = true;
-                        postObject.selfText = post.data.selftext.replace(/"/g, '&quot;');
-                    }
-
-                    if (post.data.domain === 'i.redd.it') { // image post
-                        postObject.showLocal = true;
-                    }
-                    this.redditPostList.push(postObject);
-                });
+                this.redditPostList = redditAPIData.data.children.map(this.createRedditPostObject);
                 callback(this.redditPostList);
             },
             'cannot load data from reddit.com'
@@ -309,7 +310,7 @@ const apiView = {
             redditPosts.forEach((post) => {
                 let displayArea = '';
 
-                if (post.isSelf) { // self post - show text
+                if (post.is_self) { // self post - show text
                     displayArea = `<div class="reddit-post-display-area" data-type="self-post" data-self-text="${post.selfText}" style="display: none;"></div>`;
                 }
 
@@ -330,7 +331,7 @@ const apiView = {
                                            aria-label="${post.showLocal ? 'Show' : 'Open'} the post for ${post.title}">
                                            ${post.showLocal ? 'Show' : 'Open'} Post <i class="fa ${post.showLocal ? 'fa-angle-double-down' : 'fa-external-link'}" aria-hidden="true"></i>
                                         </a>
-                                        <p class="reddit-post-source"><a href="https://www.reddit.com${post.permalink}" target="_blank">${post.numberOfComments} Comments</a> on <a href="https://www.reddit.com/${post.subredditName}" target="_blank">${post.subredditName}</a></p>
+                                        <p class="reddit-post-source"><a href="https://www.reddit.com${post.permalink}" target="_blank">${post.num_comments} Comments</a> on <a href="https://www.reddit.com/${post.subreddit_name_prefixed}" target="_blank">${post.subreddit_name_prefixed}</a></p>
                                     </div>
                                 </div>
                                 ${displayArea}
