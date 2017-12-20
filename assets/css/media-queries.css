@@ -93,7 +93,7 @@
 }
 
 @media screen and (min-width: 960px) {
-    .container {
+    main, .search-form-container {
         padding: 0;
     }
 }

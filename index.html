@@ -20,46 +20,45 @@
         <header role="banner">
             <h1 class="text-center">Cryptocurrency<br>Market Data, News & Social Posts</h1>
         </header>
+        <section role="region" class="search-form-container">
+            <p class="intro">Get the latest Market Data, News Headlines and Reddit posts of your favourite Cryptocurrency all in one place.</p>
+            <h2 class="text-center">Search for a Cryptocurrency</h2>
+            <form id="search-form" role="search">
+                <label for="search-input" class="sr-only">Search for a Cryptocurrency by name or symbol</label>
+                <input id="search-input" class="search-input" aria-label="Search for Cryptocurrency" aria-describedby="search-help" type="text" placeholder="Enter a Name or Symbol">
+                <small id="search-help" class="search-help text-center">Search by name or ticker symbol</small>
+            </form>
+        </section>
         <main role="main">
-            <div class="container">
-                <section class="start-page">
-                    <p class="intro text-justify">Get the latest Market Data, News Headlines and Reddit posts of your favourite Cryptocurrency all in one place.</p>
-                    <p class="text-loading text-center"><em>Loading cryptocurrencies ... please wait</em> <i class="fa fa-spinner fa-pulse fa-fw"></i></p>
-                    <div class="search-form-container text-center" hidden aria-hidden="true">
-                        <h2 class="text-center">Search for a Cryptocurrency to begin</h2>
-                        <form id="search-form" class="margin-top-20">
-                            <label for="search-input" class="sr-only">Search for a Cryptocurrency by name or symbol</label>
-                            <input id="search-input" class="search-input" aria-label="Search for Cryptocurrency" aria-describedby="search-help" type="text" placeholder="Enter a Name or Symbol">
-                            <small id="search-help" class="search-help">Search by name or ticker symbol</small>
-                        </form>
+            <section class="start-page">
+                <h2 class="text-center">... Or choose one of the Top Ten Cryptos below</h2>
+                <p class="text-loading text-center"><em>Loading cryptocurrencies ... please wait</em> <i class="fa fa-spinner fa-pulse fa-fw"></i></p>
+                <div class="top-ten-container text-center" hidden aria-hidden="true" aria-live="polite">
+                    <ul class="top-ten-cryptos"></ul>
+                </div>
+            </section>
+            <section role="region" class="info-page" hidden aria-hidden="true" aria-live="polite">
+                <hr class="divider">
+                <article role="article" class="js-market-data">
+                    <h3 class="info-heading">Market Data <span class="js-crypto-name"></span></h3>
+                    <div class="market-data-container">
+                        <p><span>Price (USD):</span> <span class="js-usd-price">0.00</span></p>
+                        <p><span>Price (BTC):</span> <span class="js-btc-price">0.00</span></p>
+                        <p><span>Market Cap (USD):</span> <span class="js-market-cap">0.00</span></p>
+                        <p><span>Volume (24h):</span> <span class="js-volume">0.00</span></p>
                     </div>
-                    <div class="top-ten-container text-center" hidden aria-hidden="true">
-                        <h2 class="text-center">... Or choose one of the Top Ten Cryptos below</h2>
-                        <ul class="top-ten-cryptos"></ul>
-                    </div>
-                </section>
-                <section role="region" class="info-page" hidden aria-hidden="true">
-                    <article role="article" class="js-market-data">
-                        <h3 class="info-heading">Market Data <span class="js-crypto-name"></span></h3>
-                        <div class="market-data-container">
-                            <p><span>Price (USD):</span> <span class="js-usd-price">0.00</span></p>
-                            <p><span>Price (BTC):</span> <span class="js-btc-price">0.00</span></p>
-                            <p><span>Market Cap (USD):</span> <span class="js-market-cap">0.00</span></p>
-                            <p><span>Volume (24h):</span> <span class="js-volume">0.00</span></p>
-                        </div>
-                    </article>
-                    <article role="article" class="js-news-articles">
-                        <h3 class="info-heading">News Headlines <span class="js-crypto-name"></span></h3>
-                        <p class="text-loading-articles"><em>Loading News articles ... please wait</em> <i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i></p>
-                        <div class="news-article-container"></div>
-                    </article>
-                    <article role="article" class="js-reddit-posts">
-                        <h3 class="info-heading">Reddit Posts <span class="js-crypto-name"></span></h3>
-                        <p class="text-loading-posts"><em>Loading Reddit posts ... please wait</em> <i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i></p>
-                        <div class="reddit-posts-container"></div>
-                    </article>
-                </section>
-            </div>
+                </article>
+                <article role="article" class="js-news-articles">
+                    <h3 class="info-heading">News Headlines <span class="js-crypto-name"></span></h3>
+                    <p class="text-loading-articles"><em>Loading News articles ... please wait</em> <i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i></p>
+                    <div class="news-article-container"></div>
+                </article>
+                <article role="article" class="js-reddit-posts">
+                    <h3 class="info-heading">Reddit Posts <span class="js-crypto-name"></span></h3>
+                    <p class="text-loading-posts"><em>Loading Reddit posts ... please wait</em> <i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i></p>
+                    <div class="reddit-posts-container"></div>
+                </article>
+            </section>
         </main>
     </div>
 

@@ -31,16 +31,6 @@ input {
 .text-center {
     text-align: center;
 }
-.margin-top-20 {
-    margin-top: 20px;
-}
-
-/* Layout */
-.container {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 5%;
-}
 
 /* Sticky Footer */
 .page-wrapper {
@@ -73,8 +63,10 @@ footer a, footer a:active, footer a:focus, footer a:visited {
     color: #dadada;
 }
 /* Main */
-main {
-    padding: 5% 2%;
+main, .search-form-container {
+    max-width: 960px;
+    margin: 20px auto;
+    padding: 0 5%;
 }
 
 /* --- Start Page --- */
@@ -96,7 +88,7 @@ main {
 
 /* Top 10 list */
 .top-ten-container {
-    margin-top: 30px;
+    margin-top: 10px;
 }
 .top-ten-cryptos {
     list-style-type: none;
@@ -117,6 +109,13 @@ main {
 }
 
 /* --- Info Page --- */
+hr.divider {
+    border: 0;
+    height: 1px;
+    background: rgba(0, 51, 102, 0.4);
+    margin: 0 0 20px;
+}
+
 .info-page article {
     margin-bottom: 30px;
 }
