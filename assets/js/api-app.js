@@ -40,6 +40,12 @@ const TEST_CoinmarketcapAPIURL = 'resources/test-json/coinmarketcap.json';
 const TEST_NewsorgAPIURL = 'resources/test-json/newsapi.json';
 const TEST_RedditAPIURL = 'resources/test-json/reddit.json';
 
+/* Main URLs for APIs */
+const MAIN_CRYPTOCOMPARE_URL = 'https://www.cryptocompare.com';
+const MAIN_COINMARKETCAP_URL = 'https://coinmarketcap.com';
+const MAIN_NEWSAPI_URL = 'https://newsapi.org';
+const MAIN_REDDIT_URL = 'https://www.reddit.com';
+
 /**
  * Object to manage API requests and data
  */
@@ -80,19 +86,14 @@ const apiApp = {
     // Create the CryptoCurrency object from coinmarketcap.com API json result object
     const {price_usd, price_btc, market_cap_usd} = cryptoObj;
     const volume_24h_usd = cryptoObj['24h_volume_usd'];
-    let crypto = new CryptoCurrency(cryptoObj.name, cryptoObj.symbol, cryptoObj.rank, {
-      price_usd,
-      price_btc,
-      market_cap_usd,
-      volume_24h_usd
-    });
+    let crypto = new CryptoCurrency(cryptoObj.name, cryptoObj.symbol, cryptoObj.rank, { price_usd, price_btc, market_cap_usd, volume_24h_usd});
 
     // Set the URL of the crypto icon - there are special cases due to inconsistent Symbol usage between Coinmarketcap and Cryptocompare
     // Only taking care of IOTA, since it's in top ten market cap, rest will get a generic icon if there is no one to one mapping between Coinmarketcap and Cryptocompare
     if (cryptoObj.symbol === 'MIOTA') {
-      crypto.iconPATH = `https://www.cryptocompare.com/${this.cryptocompareData["IOT"].ImageUrl}`;
+      crypto.iconPATH = `${MAIN_CRYPTOCOMPARE_URL}/${this.cryptocompareData["IOT"].ImageUrl}`;
     } else {
-      crypto.iconPATH = !!this.cryptocompareData[cryptoObj.symbol] ? `https://www.cryptocompare.com${this.cryptocompareData[cryptoObj.symbol].ImageUrl}` : 'assets/images/generic-icon.jpg';
+      crypto.iconPATH = !!this.cryptocompareData[cryptoObj.symbol] ? `${MAIN_CRYPTOCOMPARE_URL}${this.cryptocompareData[cryptoObj.symbol].ImageUrl}` : 'assets/images/generic-icon.jpg';
     }
     return crypto;
   },
@@ -314,14 +315,14 @@ const apiView = {
                              <img src="${redditPostObj.thumbnailURL}" alt="Reddit Post Image">
                            </div>
                            <div class="reddit-post-content">
-                             <h4 class="reddit-post-headline"><a href="${redditPostObj.url}" target="_blank">${redditPostObj.title}</a> <a class="reddit-post-domain" href="https://www.reddit.com/domain/${redditPostObj.domain}/" target="_blank"><small>(${redditPostObj.domain})</small></a></h4>
+                             <h4 class="reddit-post-headline"><a href="${redditPostObj.url}" target="_blank">${redditPostObj.title}</a> <a class="reddit-post-domain" href="${MAIN_REDDIT_URL}/domain/${redditPostObj.domain}/" target="_blank"><small>(${redditPostObj.domain})</small></a></h4>
                              <a class="reddit-post-show ${redditPostObj.showLocal ? 'js-show-media-locally' : ''}" 
                                href="${redditPostObj.showLocal ? '#' : redditPostObj.url}" 
                                target="_blank" 
                                aria-label="${redditPostObj.showLocal ? 'Show' : 'Open'} the post for ${redditPostObj.title}">
                                ${redditPostObj.showLocal ? 'Show' : 'Open'} Post <i class="fa ${redditPostObj.showLocal ? 'fa-angle-double-down' : 'fa-external-link'}" aria-hidden="true"></i>
                              </a>
-                             <p class="reddit-post-source"><a href="https://www.reddit.com${redditPostObj.permalink}" target="_blank">${redditPostObj.num_comments} Comments</a> on <a href="https://www.reddit.com/${redditPostObj.subreddit_name_prefixed}" target="_blank">${redditPostObj.subreddit_name_prefixed}</a></p>
+                             <p class="reddit-post-source"><a href="${MAIN_REDDIT_URL}${redditPostObj.permalink}" target="_blank">${redditPostObj.num_comments} Comments</a> on <a href="${MAIN_REDDIT_URL}/${redditPostObj.subreddit_name_prefixed}" target="_blank">${redditPostObj.subreddit_name_prefixed}</a></p>
                            </div>
                          </div>
                          ${displayArea}
