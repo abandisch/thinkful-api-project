@@ -40,3 +40,14 @@ Initial wireframe designs.
 * [x] As a user I want to see posts from reddit related to the cryptocurrency so I can keep up to date with social media trends
 * [ ] As a user I want to click on a reddit post to go to that post of reddit.com so that I read comments from other users
 * [ ] As a user I want to click on a ‘Go Back’ button to navigate back to the main list of cryptocurrencies
+
+
+## MVP Feedback
+* Can we have a link to coinmarketcap for more info? Graphs etc?
+* Can you put the price history graphs into the page?
+* The back button doesn't work
+* When search is added, can you filter the crypto list when searching?
+* Should we be able to load more news articles and reddit posts?
+* What about events for the crypto??
+* Clicking on the news title to view the news article would be good
+* The news articles sometimes don't match the crypto, or there will be one vague reference to it in the article
