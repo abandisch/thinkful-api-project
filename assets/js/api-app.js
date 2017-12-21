@@ -2,6 +2,7 @@
 
 /**
  * CryptoCurrency - Class for a CryptoCurrency
+ * @param id - coinmarketcap ID for this crypto
  * @param name - Full name of the Cryptocurrency
  * @param symbol - Ticker (or stock) symbol of the Cryptocurrency
  * @param rank - market cap rank
@@ -9,7 +10,8 @@
  * @param marketData - Market Data object
  * @constructor
  */
-function CryptoCurrency(name, symbol, rank, marketData, iconPATH) {
+function CryptoCurrency(id, name, symbol, rank, marketData, iconPATH) {
+  this.id = id;
   this.cryptoName = name;
   this.tickerSymbol = symbol;
   this.rank = rank;
@@ -50,18 +52,20 @@ const MAIN_REDDIT_URL = 'https://www.reddit.com';
  * Object to manage API requests and data
  */
 const apiApp = {
-  cryptocurrencyList: [],
+  searchCryptocurrencyList: [],      // Array of all Cryptocurrencies names and their symbols. Used for search function.
+  cryptocurrencyList: [],            // Array of CryptoCurrency objects. Used to store top ten cryptos
   newsArticleList: [],
   redditPostList: [],
   cryptocompareData: {},
   //cryptocompareAPIURL: 'https://min-api.cryptocompare.com/data/all/coinlist',
   cryptocompareAPIURL: 'assets/js/cryptocompare.json', // Pre-downloaded this, since I only need image URL's
-  coinmarketcapAPIURL: 'https://api.coinmarketcap.com/v1/ticker/',
-  // coinmarketcapAPIURL: TEST_CoinmarketcapAPIURL,
-  newsapiorgAPIURL: 'https://newsapi.org/v2/everything',
-  // newsapiorgAPIURL: TEST_NewsorgAPIURL,
-  redditAPIURL: 'https://www.reddit.com/search.json',
-  // redditAPIURL: TEST_RedditAPIURL,
+  // coinmarketcapAPIURL: 'https://api.coinmarketcap.com/v1/ticker/',
+  coinmarketcapTopCryptosAPIURL: TEST_CoinmarketcapAPIURL,
+  coinmarketcapGetCryptoAPIURL: 'https://api.coinmarketcap.com/v1/ticker/',
+  // newsapiorgAPIURL: 'https://newsapi.org/v2/everything',
+  newsapiorgAPIURL: TEST_NewsorgAPIURL,
+  // redditAPIURL: 'https://www.reddit.com/search.json',
+  redditAPIURL: TEST_RedditAPIURL,
   currentCrypto: null,
   callAPI: function (apiQueryData) {
     // Should execute the Ajax call to the API URL and provide any query data
@@ -87,7 +91,7 @@ const apiApp = {
     // Create the CryptoCurrency object from coinmarketcap.com API json result object
     const {price_usd, price_btc, market_cap_usd} = cryptoObj;
     const volume_24h_usd = cryptoObj['24h_volume_usd'];
-    let crypto = new CryptoCurrency(cryptoObj.name, cryptoObj.symbol, cryptoObj.rank, { price_usd, price_btc, market_cap_usd, volume_24h_usd});
+    let crypto = new CryptoCurrency(cryptoObj.id, cryptoObj.name, cryptoObj.symbol, cryptoObj.rank, { price_usd, price_btc, market_cap_usd, volume_24h_usd});
 
     // Set the URL of the crypto icon - there are special cases due to inconsistent Symbol usage between Coinmarketcap and Cryptocompare
     // Only taking care of IOTA, since it's in top ten market cap, rest will get a generic icon if there is no one to one mapping between Coinmarketcap and Cryptocompare
@@ -98,13 +102,13 @@ const apiApp = {
     }
     return crypto;
   },
-  fetchCoinData: function (numberOfCoins, apiViewCallback) {
+  fetchTopCryptocurrencyData: function (howManyCryptos, apiViewCallback) {
     // Should query coinmarketcap.com API for the top ten cryptos
     // Should create a CryptoCurrency object for each
     // Should populate the cryptocurrencyList array with all ten CryptoCurrency objects
     const apiQueryParams = new ApiQueryParams(
-      this.coinmarketcapAPIURL,
-      {limit: numberOfCoins},
+      this.coinmarketcapTopCryptosAPIURL,
+      {limit: howManyCryptos}, // Limit of 0 = all cryptos
       (coinmarketcapApiData) => {
         this.cryptocurrencyList = coinmarketcapApiData.map(this.createCryptoCurrency, this);
         apiViewCallback(this.cryptocurrencyList);
@@ -113,32 +117,50 @@ const apiApp = {
     );
     this.callAPI(apiQueryParams);
   },
-  initCryptoCurrencyList: function (numberOfCoins, apiViewCallback) {
+  fetchTopCryptocurrencies: function (howManyCryptos, apiViewCallback) {
     // Should query Cryptocompare.com to get crypto data, which includes images for each crypto (the only reason to query this API)
     // Then should call the fetchCoinData, which will query coinmarketcap.com for crypto market data
     // That callback function should build the array of CryptoCurrencies and then call apiViewCallback
-    this.callAPI(new ApiQueryParams(
-      this.cryptocompareAPIURL,
-      {/* no parameters */},
-      (cryptocompareApiData) => {
-        this.cryptocompareData = cryptocompareApiData.Data;
-        this.fetchCoinData(numberOfCoins, apiViewCallback)
-      },
-      'Unable to fetch cryptocurrency list from cryptocompare.com API. Please try again later.'
-    ));
+
+    if (!this.cryptocurrencyList.length && howManyCryptos !== this.cryptocurrencyList.length) {
+      this.callAPI(new ApiQueryParams(
+        this.cryptocompareAPIURL,
+        {/* no parameters */},
+        (cryptocompareApiData) => {
+          this.cryptocompareData = cryptocompareApiData.Data;
+          this.fetchTopCryptocurrencyData(howManyCryptos, apiViewCallback);
+        },
+        'Unable to fetch cryptocurrency list from cryptocompare.com API. Please try again later.'
+      ));
+    } else {
+      apiViewCallback(this.cryptocurrencyList);
+    }
 
   },
-  getCrypto: function (symbol) {
-    // Should check if this.currentCrypto is null or the symbol that is required is not the currentCrypto
-    // Find the required crypto and return that
-    // Otherwise just return the currentCrypto
-    if (this.currentCrypto === null || this.currentCrypto.tickerSymbol !== symbol) {
-      this.currentCrypto = this.cryptocurrencyList.filter(function (crypto) {
-        return crypto.tickerSymbol === symbol;
-      })[0];
-      return !!this.currentCrypto ? this.currentCrypto : null;
+  fetchCryptocurrency: function (cryptocurrencyID, callback) {
+    // check to see if its in the top 10, if so return that one, if not, do an API call
+    let crypto = this.cryptocurrencyList.find(function (cryptoObj) {
+      return cryptoObj.id === cryptocurrencyID;
+    }, this);
+
+    if (crypto !== undefined) {
+      callback(crypto);
+    } else {
+      this.callAPI(new ApiQueryParams(
+        `${this.coinmarketcapGetCryptoAPIURL}/${cryptocurrencyID}/`,
+        { /* no params */},
+        (cryptocurrencyData) => {
+          let crypto;
+          if (cryptocurrencyData.error) { // invalid cryptocurrencyID provided
+            crypto = null;
+          } else {
+            crypto = this.createCryptoCurrency(cryptocurrencyData);
+          }
+          callback(crypto);
+        },
+        'Unable to fetch coinmarketcap.com data. Please try again later.'
+      ));
     }
-    return this.currentCrypto;
   },
   fetchNewsHeadlines: function (cryptoObject, callback) {
     // Should query newsapi.org for news headlines for the given crypto
@@ -202,6 +224,22 @@ const apiApp = {
       },
       'cannot load data from reddit.com'
     ));
+  },
+  loadSearchCryptocurrencyList: function () {
+    // Get the coinmarketcap.com 'Quick Search' JSON file and save the details in quickSearchCryptocurrencyList array
+    // This data is made up of objects that look like: {"tokens": ["Bitcoin", "BTC"], "symbol": "BTC", "name": "Bitcoin", "rank": 1, "slug": "bitcoin"}
+    // This data will be used to filter search query
+    if (!this.searchCryptocurrencyList.length) {
+      this.callAPI(new ApiQueryParams(
+        'https://files.coinmarketcap.com/generated/search/quick_search.json',
+        { /* No params */ },
+        (quickSearchAPIData) => {
+          // Process the results and extract only what is needed from JSON
+          this.searchCryptocurrencyList = quickSearchAPIData;
+        },
+        'cannot load data from files.coinmarketcap.com'
+      ));
+    }
   }
 };
 
@@ -211,7 +249,7 @@ const apiApp = {
 const apiView = {
   createCryptoCurrencyLiElement: function (collectiveHTML, cryptoCurrencyObj) {
     collectiveHTML += `<li>
-                         <a href="#" data-crypto-symbol="${cryptoCurrencyObj.tickerSymbol}">
+                         <a href="#" data-crypto-id="${cryptoCurrencyObj.id}">
                            <figure>
                              <img src="${cryptoCurrencyObj.iconPATH}" alt="${cryptoCurrencyObj.cryptoName}">
                              <figcaption class="text-center">${cryptoCurrencyObj.tickerSymbol} <span class="sr-only">${cryptoCurrencyObj.cryptoName}</span></figcaption>
@@ -235,51 +273,56 @@ const apiView = {
     $('.news-article-container').empty();
     $('.reddit-posts-container').empty();
 
-    const initCryptoListArgs = {
-      numberOfCryptosToFetch: 10,
-      callback: function (cryptocurrencyList) {
-        let topTenListHTML = cryptocurrencyList.reduce(apiView.createCryptoCurrencyLiElement, '');
-        $('.top-ten-cryptos').html('').append(topTenListHTML);
-        $('.text-loading').prop('hidden', true).attr('aria-hidden', 'true');
-        $('.top-ten-container').prop('hidden', false).attr('aria-hidden', 'false');
-        $('.search-form-container').prop('hidden', false).attr('aria-hidden', 'false');
-      }
-    };
+    // Load the search data
+    apiApp.loadSearchCryptocurrencyList();
 
-    apiApp.initCryptoCurrencyList(initCryptoListArgs.numberOfCryptosToFetch, initCryptoListArgs.callback);
+    // Fetch and show the top 10 cryptos
+    apiApp.fetchTopCryptocurrencies(10, function (cryptocurrencyList) {
+      let topTenListHTML = cryptocurrencyList.reduce(apiView.createCryptoCurrencyLiElement, '');
+      $('.top-ten-cryptos').html('').append(topTenListHTML);
+      $('.text-loading').prop('hidden', true).attr('aria-hidden', 'true');
+      $('.top-ten-container').prop('hidden', false).attr('aria-hidden', 'false');
+      $('.search-form-container').prop('hidden', false).attr('aria-hidden', 'false');
+    });
   },
-  showCryptoDetails: function (cryptoSymbol) {
+  showCryptoDetails: function (cryptocurrencyID) {
     // Should hide the main page
     // Should show the 'info' page
     // Show market data for the given crypto
     // Get apiApp to request news headlines and show them
     // Get apiApp to request reddit posts and show them
-    $('.top-ten-section').prop('hidden', true).attr('aria-hidden', 'true');
-    $('.crypto-info-section').prop('hidden', false).attr('aria-hidden', 'false');
+    apiApp.fetchCryptocurrency(cryptocurrencyID, (crypto) => {
+      if (crypto !== null) {
+        // Hide top ten section and show the info section
+        $('.top-ten-section').prop('hidden', true).attr('aria-hidden', 'true');
+        $('.crypto-info-section').prop('hidden', false).attr('aria-hidden', 'false');
 
-    // Get the crypto object
-    let crypto = apiApp.getCrypto(cryptoSymbol);
+        // Update crypto name in the headings
+        $('.js-crypto-name').text(` - ${crypto.cryptoName}`);
 
-    // Update crypto name in the headings
-    $('.js-crypto-name').text(` - ${crypto.cryptoName}`);
+        // Display the market data
+        this.displayMarketData(crypto);
 
-    // Display the market data
-    this.displayMarketData(crypto);
+        // Display the news headlines
+        this.displayNewsArticles(crypto);
 
-    // Display the news headlines
-    this.displayNewsArticles(crypto);
+        // Display the reddit posts
+        this.displayRedditPosts(crypto);
 
-    // Display the reddit posts
-    this.displayRedditPosts(crypto);
+        // Hide intro text
+        $('.intro').prop('hidden', true).attr('aria-hidden', 'true');
 
-    // Hide intro text
-    $('.intro').prop('hidden', true).attr('aria-hidden', 'true');
+        // Show home button
+        $('nav').prop('hidden', false).attr('aria-hidden', 'false');
 
-    // Show home button
-    $('nav').prop('hidden', false).attr('aria-hidden', 'false');
+        // Add history push state
+        history.pushState({ id: crypto.id }, null, `?symbol=${crypto.tickerSymbol}`);
+      } else {
+        alert('Sorry, could not find the cryptocurrency. Please try another search');
+      }
 
-    // Add history push state
-    history.pushState({ symbol: crypto.tickerSymbol }, null, `?symbol=${crypto.tickerSymbol}`)
+    });
+
   },
   displayMarketData: function (crypto) {
     // Update market data for the current crypto on the 'info' page
@@ -371,11 +414,11 @@ const apiView = {
  * Object to handle form events
  */
 const eventHandler = {
-  mainPageClickEvents: function () {
+  topTenClickEvents: function () {
     $('.top-ten-cryptos').on('click', 'a', function (event) {
       event.preventDefault();
-      let crypto = $(this).data('crypto-symbol');
-      apiView.showCryptoDetails(crypto);
+      let cryptoID = $(this).data('crypto-id');
+      apiView.showCryptoDetails(cryptoID);
     });
   },
   redditShowPostClickEvents: function () {
@@ -403,6 +446,24 @@ const eventHandler = {
         $(this).html('Show Post <i class="fa fa-angle-double-down" aria-hidden="true"></i>');
       }
     });
+  },
+  homeButtonClickEvents: function () {
+    $('.btn-home').on('click', function (event) {
+      event.preventDefault();
+      history.replaceState(null,null,'index.html');
+      apiView.showStartPage();
+    });
+  },
+  historyPopStateEvents: function () {
+    window.addEventListener('popstate', function(e) {
+      let cryptoObj = e.state;
+      if (cryptoObj == null) {
+        history.replaceState(null,null,'index.html');
+        apiView.showStartPage();
+      } else {
+        apiView.showCryptoDetails(cryptoObj.id);
+      }
+    });
   }
 };
 
@@ -411,31 +472,23 @@ $(function () {
   // Initialise and show the start page
   apiView.showStartPage();
 
-  // handle the click events on the main page
-  eventHandler.mainPageClickEvents();
+  // handle the click events on the main page, i.e. the top 10
+  eventHandler.topTenClickEvents();
 
   // handle Reddit post clicks
   eventHandler.redditShowPostClickEvents();
 
   // handle home button click
-  $('.btn-home').on('click', function (event) {
-    event.preventDefault();
-    history.replaceState(null,null,'index.html');
-    apiView.showStartPage();
-  });
+  eventHandler.homeButtonClickEvents();
 
   // Handle popstate events (i.e. back button clicks)
-  window.addEventListener('popstate', function(e) {
-    let cryptoSymbol = e.state;
-    if (cryptoSymbol == null) {
-      history.replaceState(null,null,'index.html');
-      apiView.showStartPage();
-    } else {
-      apiView.showCryptoDetails(cryptoSymbol.symbol);
-    }
-  });
+  eventHandler.historyPopStateEvents();
 
-  // handle the search submit event - TBC after MVP
-
+  // handle the search submit event
+  $('#search-form').on('submit', function (event) {
+    event.preventDefault();
+    let searchValue = $(this).find('.search-input').val();
+    apiView.showCryptoDetails(searchValue);
+  })
 });
 
