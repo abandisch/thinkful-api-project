@@ -51,3 +51,4 @@ Initial wireframe designs.
 * What about events for the crypto??
 * Clicking on the news title to view the news article would be good
 * The news articles sometimes don't match the crypto, or there will be one vague reference to it in the article
+* Can you add Twitter search results for the crypto?
