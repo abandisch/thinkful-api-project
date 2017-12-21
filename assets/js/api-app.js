@@ -423,6 +423,7 @@ const apiView = {
 
       $('.text-loading-posts').prop('hidden', true).attr('aria-hidden', 'true');
       $('.reddit-posts-container')
+        .html('')
         .append(redditPostsHTML)
         .prop('hidden', false).attr('aria-hidden', 'false');
     });
