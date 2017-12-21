@@ -277,6 +277,9 @@ const apiView = {
 
     // Show home button
     $('nav').prop('hidden', false).attr('aria-hidden', 'false');
+
+    // Add history push state
+    history.pushState({ symbol: crypto.tickerSymbol }, null, `?symbol=${crypto.tickerSymbol}`)
   },
   displayMarketData: function (crypto) {
     // Update market data for the current crypto on the 'info' page
@@ -417,8 +420,20 @@ $(function () {
   // handle home button click
   $('.btn-home').on('click', function (event) {
     event.preventDefault();
+    history.replaceState(null,null,'index.html');
     apiView.showStartPage();
-  })
+  });
+
+  // Handle popstate events (i.e. back button clicks)
+  window.addEventListener('popstate', function(e) {
+    let cryptoSymbol = e.state;
+    if (cryptoSymbol == null) {
+      history.replaceState(null,null,'index.html');
+      apiView.showStartPage();
+    } else {
+      apiView.showCryptoDetails(cryptoSymbol.symbol);
+    }
+  });
 
   // handle the search submit event - TBC after MVP
 
