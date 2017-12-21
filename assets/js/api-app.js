@@ -77,7 +77,8 @@ const apiApp = {
         // Call the callback function with the results of teh API query
         apiQueryData.successCallback(apiData);
       })
-      .fail(function () {
+      .fail(function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR, textStatus, errorThrown);
         // Let the user know something went wrong.
         alert(`${apiQueryData.failMessage}`);
       });
@@ -145,7 +146,7 @@ const apiApp = {
     this.callAPI(new ApiQueryParams(
       this.newsapiorgAPIURL,
       {
-        q: `crypto AND (${cryptoObject.cryptoName} OR ${cryptoObject.tickerSymbol})`,
+        q: `(crypto OR cryptocurrency) AND (${cryptoObject.cryptoName} OR ${cryptoObject.tickerSymbol})`,
         sources: 'abc-news,australian-financial-review,crypto-coins-news,bloomberg,techradar,techcrunch,reuters,reddit-r-all,news-com-au,nbc-news,info-money,hacker-news,google-news,fortune,financial-times,financial-post,engadget,cnn,cnbc,cbs-news,buzzfeed,cbc-news,business-insider-uk,bbc-news,the-next-web,wired,the-washington-post',
         sortBy: 'publishedAt',
         apiKey: 'c148de8ea6b14e0da2a271e4b50f0f63',
@@ -219,16 +220,26 @@ const apiView = {
                        </li>`;
     return collectiveHTML;
   },
-  initMainPage: function () {
+  showStartPage: function () {
     // Setup top ten list on main page
     // Show 'loading' text and remove it once the load is complete
     // Remove loading text and show top 10 and search form
+
+    // Show the top ten section and intro text
+    $('.top-ten-section').prop('hidden', false).attr('aria-hidden', 'false');
+    $('.intro').prop('hidden', false).attr('aria-hidden', 'false');
+
+    // Hide the home button and crypto info section and clear it out news articles and reddit posts
+    $('.crypto-info-section').prop('hidden', true).attr('aria-hidden', 'true');
+    $('nav').prop('hidden', true).attr('aria-hidden', 'true');
+    $('.news-article-container').empty();
+    $('.reddit-posts-container').empty();
 
     const initCryptoListArgs = {
       numberOfCryptosToFetch: 10,
       callback: function (cryptocurrencyList) {
         let topTenListHTML = cryptocurrencyList.reduce(apiView.createCryptoCurrencyLiElement, '');
-        $('.top-ten-cryptos').append(topTenListHTML);
+        $('.top-ten-cryptos').html('').append(topTenListHTML);
         $('.text-loading').prop('hidden', true).attr('aria-hidden', 'true');
         $('.top-ten-container').prop('hidden', false).attr('aria-hidden', 'false');
         $('.search-form-container').prop('hidden', false).attr('aria-hidden', 'false');
@@ -243,8 +254,8 @@ const apiView = {
     // Show market data for the given crypto
     // Get apiApp to request news headlines and show them
     // Get apiApp to request reddit posts and show them
-    $('.start-page').prop('hidden', true).attr('aria-hidden', 'true');
-    $('.info-page').prop('hidden', false).attr('aria-hidden', 'false');
+    $('.top-ten-section').prop('hidden', true).attr('aria-hidden', 'true');
+    $('.crypto-info-section').prop('hidden', false).attr('aria-hidden', 'false');
 
     // Get the crypto object
     let crypto = apiApp.getCrypto(cryptoSymbol);
@@ -263,6 +274,9 @@ const apiView = {
 
     // Hide intro text
     $('.intro').prop('hidden', true).attr('aria-hidden', 'true');
+
+    // Show home button
+    $('nav').prop('hidden', false).attr('aria-hidden', 'false');
   },
   displayMarketData: function (crypto) {
     // Update market data for the current crypto on the 'info' page
@@ -391,14 +405,20 @@ const eventHandler = {
 
 
 $(function () {
-  // Init the view
-  apiView.initMainPage();
+  // Initialise and show the start page
+  apiView.showStartPage();
 
   // handle the click events on the main page
   eventHandler.mainPageClickEvents();
 
   // handle Reddit post clicks
   eventHandler.redditShowPostClickEvents();
+
+  // handle home button click
+  $('.btn-home').on('click', function (event) {
+    event.preventDefault();
+    apiView.showStartPage();
+  })
 
   // handle the search submit event - TBC after MVP
 

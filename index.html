@@ -20,6 +20,9 @@
         <header role="banner">
             <h1 class="text-center">Cryptocurrency<br>Market Data, News & Social Posts</h1>
         </header>
+        <nav role="navigation" hidden aria-hidden="true">
+            <a href="index.html" class="btn-home"><i class="fa fa-home fa-2x"></i> <span class="sr-only">Home</span></a>
+        </nav>
         <section role="region" class="search-form-container">
             <p class="intro">Get the latest Market Data, News Headlines and Reddit posts of your favourite Cryptocurrency all in one place.</p>
             <h2 class="text-center">Search for a Cryptocurrency</h2>
@@ -30,14 +33,14 @@
             </form>
         </section>
         <main role="main">
-            <section class="start-page">
+            <section class="top-ten-section" hidden aria-hidden="true" aria-live="polite">
                 <h2 class="text-center">... Or choose one of the Top Ten Cryptos below</h2>
                 <p class="text-loading text-center"><em>Loading cryptocurrencies ... please wait</em> <i class="fa fa-spinner fa-pulse fa-fw"></i></p>
                 <div class="top-ten-container text-center" hidden aria-hidden="true" aria-live="polite">
                     <ul class="top-ten-cryptos"></ul>
                 </div>
             </section>
-            <section role="region" class="info-page" hidden aria-hidden="true" aria-live="polite">
+            <section role="region" class="crypto-info-section" hidden aria-hidden="true">
                 <hr class="divider">
                 <article role="article" class="js-market-data">
                     <h3 class="info-heading">Market Data <span class="js-crypto-name"></span></h3>
@@ -48,12 +51,12 @@
                         <p><span>Volume (24h):</span> <span class="js-volume">0.00</span></p>
                     </div>
                 </article>
-                <article role="article" class="js-news-articles">
+                <article role="article" class="js-news-articles" aria-live="polite">
                     <h3 class="info-heading">News Headlines <span class="js-crypto-name"></span></h3>
                     <p class="text-loading-articles"><em>Loading News articles ... please wait</em> <i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i></p>
                     <div class="news-article-container"></div>
                 </article>
-                <article role="article" class="js-reddit-posts">
+                <article role="article" class="js-reddit-posts" aria-live="polite">
                     <h3 class="info-heading">Reddit Posts <span class="js-crypto-name"></span></h3>
                     <p class="text-loading-posts"><em>Loading Reddit posts ... please wait</em> <i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i></p>
                     <div class="reddit-posts-container"></div>
