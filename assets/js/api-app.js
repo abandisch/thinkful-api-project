@@ -25,7 +25,7 @@ function CryptoCurrency(id, name, symbol, rank, marketData, iconPATH) {
  * @param queryData - object holding query information
  * @param dataType - JSON or JSONP, defaults to json
  * @param successCallback - function with what to do on success
- * @param failMessage - message to display on fail
+ * @param failMessage - message to show on fail
  * @param timeout - API connection timeout - defaults to 10 seconds
  */
 function ApiQueryParams(apiURL, queryData, successCallback, failMessage, dataType, timeout) {
@@ -52,7 +52,7 @@ const MAIN_REDDIT_URL = 'https://www.reddit.com';
  * Object to manage API requests and data
  */
 const apiApp = {
-  searchCryptocurrencyList: [],      // Array of all Cryptocurrencies names and their symbols. Used for search function.
+  cryptocurrencySearchList: [],      // Array of all Cryptocurrencies names and their symbols. Used for filter search function.
   cryptocurrencyList: [],            // Array of CryptoCurrency objects. Used to store top ten cryptos
   newsArticleList: [],
   redditPostList: [],
@@ -83,8 +83,7 @@ const apiApp = {
       })
       .fail(function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR, textStatus, errorThrown);
-        // Let the user know something went wrong.
-        alert(`${apiQueryData.failMessage}`);
+        alert(apiQueryData.failMessage);
       });
   },
   createCryptoCurrency: function (cryptoObj) {
@@ -147,20 +146,33 @@ const apiApp = {
       callback(crypto);
     } else {
       this.callAPI(new ApiQueryParams(
-        `${this.coinmarketcapGetCryptoAPIURL}/${cryptocurrencyID}/`,
-        { /* no params */},
+        `${this.coinmarketcapGetCryptoAPIURL}${cryptocurrencyID}/`,
+        { /* no params */ },
         (cryptocurrencyData) => {
           let crypto;
           if (cryptocurrencyData.error) { // invalid cryptocurrencyID provided
             crypto = null;
           } else {
-            crypto = this.createCryptoCurrency(cryptocurrencyData);
+            crypto = this.createCryptoCurrency(cryptocurrencyData[0]);
           }
           callback(crypto);
         },
-        'Unable to fetch coinmarketcap.com data. Please try again later.'
+        'Sorry, could not find the cryptocurrency. Please try another search'
       ));
     }
+  },
+  searchForCryptocurrencyID: function (search) {
+    let result = this.cryptocurrencySearchList.find(function (searchObj) {
+      return searchObj.symbol.toLowerCase() === search.toLowerCase() ||
+             searchObj.name.toLowerCase() === search.toLowerCase()
+    });
+
+    if (result !== undefined) {
+      return result.slug; // Slug is the same as the ID over at coinmarketcap.
+    } else {
+      return null;
+    }
+
   },
   fetchNewsHeadlines: function (cryptoObject, callback) {
     // Should query newsapi.org for news headlines for the given crypto
@@ -225,17 +237,17 @@ const apiApp = {
       'cannot load data from reddit.com'
     ));
   },
-  loadSearchCryptocurrencyList: function () {
+  loadCryptocurrencySearchList: function () {
     // Get the coinmarketcap.com 'Quick Search' JSON file and save the details in quickSearchCryptocurrencyList array
     // This data is made up of objects that look like: {"tokens": ["Bitcoin", "BTC"], "symbol": "BTC", "name": "Bitcoin", "rank": 1, "slug": "bitcoin"}
     // This data will be used to filter search query
-    if (!this.searchCryptocurrencyList.length) {
+    if (!this.cryptocurrencySearchList.length) {
       this.callAPI(new ApiQueryParams(
         'https://files.coinmarketcap.com/generated/search/quick_search.json',
         { /* No params */ },
         (quickSearchAPIData) => {
           // Process the results and extract only what is needed from JSON
-          this.searchCryptocurrencyList = quickSearchAPIData;
+          this.cryptocurrencySearchList = quickSearchAPIData;
         },
         'cannot load data from files.coinmarketcap.com'
       ));
@@ -274,7 +286,7 @@ const apiView = {
     $('.reddit-posts-container').empty();
 
     // Load the search data
-    apiApp.loadSearchCryptocurrencyList();
+    apiApp.loadCryptocurrencySearchList();
 
     // Fetch and show the top 10 cryptos
     apiApp.fetchTopCryptocurrencies(10, function (cryptocurrencyList) {
@@ -284,6 +296,17 @@ const apiView = {
       $('.top-ten-container').prop('hidden', false).attr('aria-hidden', 'false');
       $('.search-form-container').prop('hidden', false).attr('aria-hidden', 'false');
     });
+  },
+  searchCryptocurrency: function (searchValue) {
+    // Should get the crypto ID from the search value by looking in the apiApp.searchCryptocurrencyList array
+    // should call showCryptoDetails with the id
+    // if the id === null, show an error message
+    let cryptoID = apiApp.searchForCryptocurrencyID(searchValue);
+    if (cryptoID !== null) {
+      this.showCryptoDetails(cryptoID);
+    } else {
+      alert('Sorry, cannot find the Cryptocurrency. Please try again.');
+    }
   },
   showCryptoDetails: function (cryptocurrencyID) {
     // Should hide the main page
@@ -317,10 +340,7 @@ const apiView = {
 
         // Add history push state
         history.pushState({ id: crypto.id }, null, `?symbol=${crypto.tickerSymbol}`);
-      } else {
-        alert('Sorry, could not find the cryptocurrency. Please try another search');
       }
-
     });
 
   },
@@ -328,7 +348,11 @@ const apiView = {
     // Update market data for the current crypto on the 'info' page
     // Use some regex (sourced online) to format the number as a currency with commas
     // USD price
-    $('.js-usd-price').text('$' + Number.parseFloat(crypto.marketData.price_usd).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+    if (Number.parseFloat(crypto.marketData.price_usd) < 1) {
+      $('.js-usd-price').text('$' + Number.parseFloat(crypto.marketData.price_usd).toFixed(6).toString());
+    } else {
+      $('.js-usd-price').text('$' + Number.parseFloat(crypto.marketData.price_usd).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+    }
     // BTC price
     $('.js-btc-price').text(Number.parseFloat(crypto.marketData.price_btc).toFixed(8));
     // Market Cap
@@ -464,6 +488,13 @@ const eventHandler = {
         apiView.showCryptoDetails(cryptoObj.id);
       }
     });
+  },
+  searchForCryptocurrency: function () {
+    $('#search-form').on('submit', function (event) {
+      event.preventDefault();
+      let searchValue = $(this).find('.search-input').val();
+      apiView.searchCryptocurrency(searchValue);
+    })
   }
 };
 
@@ -485,10 +516,6 @@ $(function () {
   eventHandler.historyPopStateEvents();
 
   // handle the search submit event
-  $('#search-form').on('submit', function (event) {
-    event.preventDefault();
-    let searchValue = $(this).find('.search-input').val();
-    apiView.showCryptoDetails(searchValue);
-  })
+  eventHandler.searchForCryptocurrency();
 });
 
