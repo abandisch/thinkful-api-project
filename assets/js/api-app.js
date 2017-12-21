@@ -363,7 +363,7 @@ const apiView = {
                            <img src="${newsArticleObj.urlToImage}" alt="News Article Image">
                          </div>
                          <div class="news-content">
-                           <h4 class="news-headline">${newsArticleObj.title}</h4>
+                           <h4 class="news-headline"><a href="${newsArticleObj.url}" target="_blank">${newsArticleObj.title}</a></h4>
                            <p class="news-description">${newsArticleObj.description}</p>
                            <a class="news-link" href="${newsArticleObj.url}" aria-label="Read Full Article on ${newsArticleObj.title}" target="_blank">Read Full Article <i class="fa fa-external-link" aria-hidden="true"></i></a>
                            <p class="news-source"><small>Published by ${newsArticleObj.source.name} on ${publishedAtDate.getDate()}/${publishedAtDate.getMonth() + 1}/${publishedAtDate.getFullYear()}</small></p>

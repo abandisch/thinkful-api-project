@@ -201,10 +201,14 @@ hr.divider {
 .news-link:hover, .reddit-post-show:hover {
     background-color: #001f3e;
 }
-.news-headline {
+.news-headline a {
+    text-decoration: none;
     color: #222;
     font-size: 1.2em;
     text-align: justify;
+}
+.news-headline a:hover {
+    text-decoration: underline;
 }
 .news-description {
     margin: 10px 0;
