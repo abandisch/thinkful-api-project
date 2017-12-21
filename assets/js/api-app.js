@@ -56,12 +56,12 @@ const apiApp = {
   cryptocompareData: {},
   //cryptocompareAPIURL: 'https://min-api.cryptocompare.com/data/all/coinlist',
   cryptocompareAPIURL: 'assets/js/cryptocompare.json', // Pre-downloaded this, since I only need image URL's
-  // coinmarketcapAPIURL: 'https://api.coinmarketcap.com/v1/ticker/',
-  coinmarketcapAPIURL: TEST_CoinmarketcapAPIURL,
-  // newsapiorgAPIURL: 'https://newsapi.org/v2/everything',
-  newsapiorgAPIURL: TEST_NewsorgAPIURL,
-  // redditAPIURL: 'https://www.reddit.com/search.json',
-  redditAPIURL: TEST_RedditAPIURL,
+  coinmarketcapAPIURL: 'https://api.coinmarketcap.com/v1/ticker/',
+  // coinmarketcapAPIURL: TEST_CoinmarketcapAPIURL,
+  newsapiorgAPIURL: 'https://newsapi.org/v2/everything',
+  // newsapiorgAPIURL: TEST_NewsorgAPIURL,
+  redditAPIURL: 'https://www.reddit.com/search.json',
+  // redditAPIURL: TEST_RedditAPIURL,
   currentCrypto: null,
   callAPI: function (apiQueryData) {
     // Should execute the Ajax call to the API URL and provide any query data
