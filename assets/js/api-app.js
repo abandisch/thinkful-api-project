@@ -59,14 +59,9 @@ const apiApp = {
   cryptocompareData: {},
   //cryptocompareAPIURL: 'https://min-api.cryptocompare.com/data/all/coinlist',
   cryptocompareAPIURL: 'assets/js/cryptocompare.json', // Pre-downloaded this, since I only need image URL's
-  // coinmarketcapAPIURL: 'https://api.coinmarketcap.com/v1/ticker/',
-  coinmarketcapTopCryptosAPIURL: TEST_CoinmarketcapAPIURL,
-  coinmarketcapGetCryptoAPIURL: 'https://api.coinmarketcap.com/v1/ticker/',
-  // newsapiorgAPIURL: 'https://newsapi.org/v2/everything',
-  newsapiorgAPIURL: TEST_NewsorgAPIURL,
-  // redditAPIURL: 'https://www.reddit.com/search.json',
-  redditAPIURL: TEST_RedditAPIURL,
-  currentCrypto: null,
+  coinmarketcapAPIURL: 'https://api.coinmarketcap.com/v1/ticker/',
+  newsapiorgAPIURL: 'https://newsapi.org/v2/everything',
+  redditAPIURL: 'https://www.reddit.com/search.json',
   callAPI: function (apiQueryData) {
     // Should execute the Ajax call to the API URL and provide any query data
     // Should execute the success call back if successful
@@ -106,7 +101,7 @@ const apiApp = {
     // Should create a CryptoCurrency object for each
     // Should populate the cryptocurrencyList array with all ten CryptoCurrency objects
     const apiQueryParams = new ApiQueryParams(
-      this.coinmarketcapTopCryptosAPIURL,
+      this.coinmarketcapAPIURL,
       {limit: howManyCryptos}, // Limit of 0 = all cryptos
       (coinmarketcapApiData) => {
         this.cryptocurrencyList = coinmarketcapApiData.map(this.createCryptoCurrency, this);
@@ -146,7 +141,7 @@ const apiApp = {
       callback(crypto);
     } else {
       this.callAPI(new ApiQueryParams(
-        `${this.coinmarketcapGetCryptoAPIURL}${cryptocurrencyID}/`,
+        `${this.coinmarketcapAPIURL}${cryptocurrencyID}/`,
         { /* no params */ },
         (cryptocurrencyData) => {
           let crypto;
