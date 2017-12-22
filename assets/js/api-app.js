@@ -10,15 +10,19 @@
  * @param marketData - Market Data object
  * @constructor
  */
-function CryptoCurrency(id, name, symbol, rank, marketData, iconPATH) {
+function CryptoCurrency({ id, name, symbol, rank, price_usd, price_btc, market_cap_usd, '24h_volume_usd': volume_24h_usd }) {
   this.id = id;
   this.cryptoName = name;
   this.tickerSymbol = symbol;
   this.rank = rank;
-  this.iconPATH = !!iconPATH ? iconPATH : '';
-  this.marketData = !!marketData ? marketData : null;
+  this.iconPATH = '';
+  this.marketData = {
+    price_usd: price_usd,
+    price_btc: price_btc,
+    market_cap_usd: market_cap_usd,
+    volume_24h_usd: volume_24h_usd
+  };
 }
-
 /**
  * ApiQuery - class to hold the API query details
  * @param apiURL - URL of the API
@@ -60,8 +64,11 @@ const apiApp = {
   //cryptocompareAPIURL: 'https://min-api.cryptocompare.com/data/all/coinlist',
   cryptocompareAPIURL: 'assets/js/cryptocompare.json', // Pre-downloaded this, since I only need image URL's
   coinmarketcapAPIURL: 'https://api.coinmarketcap.com/v1/ticker/',
+  // coinmarketcapAPIURL: TEST_CoinmarketcapAPIURL,
   newsapiorgAPIURL: 'https://newsapi.org/v2/everything',
+  // newsapiorgAPIURL: TEST_NewsorgAPIURL,
   redditAPIURL: 'https://www.reddit.com/search.json',
+  // redditAPIURL: TEST_RedditAPIURL,
   callAPI: function (apiQueryData) {
     // Should execute the Ajax call to the API URL and provide any query data
     // Should execute the success call back if successful
@@ -81,18 +88,22 @@ const apiApp = {
         alert(apiQueryData.failMessage);
       });
   },
-  createCryptoCurrency: function (cryptoObj) {
-    // Create the CryptoCurrency object from coinmarketcap.com API json result object
-    const {price_usd, price_btc, market_cap_usd} = cryptoObj;
-    const volume_24h_usd = cryptoObj['24h_volume_usd'];
-    let crypto = new CryptoCurrency(cryptoObj.id, cryptoObj.name, cryptoObj.symbol, cryptoObj.rank, { price_usd, price_btc, market_cap_usd, volume_24h_usd});
+  getCryptoImageURL: function (tickerSymbol) {
+    let symbol = this.cryptocompareData[tickerSymbol];
 
-    // Set the URL of the crypto icon - there are special cases due to inconsistent Symbol usage between Coinmarketcap and Cryptocompare
-    // Only taking care of IOTA, since it's in top ten market cap, rest will get a generic icon if there is no one to one mapping between Coinmarketcap and Cryptocompare
-    if (cryptoObj.symbol === 'MIOTA') {
-      crypto.iconPATH = `${MAIN_CRYPTOCOMPARE_URL}/${this.cryptocompareData["IOT"].ImageUrl}`;
+    if(symbol !== undefined) {
+      return `${MAIN_CRYPTOCOMPARE_URL}/${symbol.ImageUrl}`;
     } else {
-      crypto.iconPATH = !!this.cryptocompareData[cryptoObj.symbol] ? `${MAIN_CRYPTOCOMPARE_URL}${this.cryptocompareData[cryptoObj.symbol].ImageUrl}` : 'assets/images/generic-icon.jpg';
+      return 'assets/images/generic-icon.jpg';
+    }
+  },
+  createCryptoCurrency: function (cryptoObjData) {
+    let crypto = new CryptoCurrency(cryptoObjData);
+
+    if(crypto.tickerSymbol !== 'MIOTA') {
+      crypto.iconPATH = this.getCryptoImageURL(crypto.tickerSymbol);
+    } else {
+      crypto.iconPATH = this.getCryptoImageURL("IOT");
     }
     return crypto;
   },
