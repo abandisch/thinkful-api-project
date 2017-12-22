@@ -199,12 +199,11 @@ const apiApp = {
              searchObj.name.toLowerCase() === search.toLowerCase()
     });
 
-    if (result !== undefined) {
-      return result.slug; // Slug is the same as the ID over at coinmarketcap.
-    } else {
+    if (result === undefined) {
       return null;
     }
 
+    return result.slug; // Slug is the same as the ID over at coinmarketcap.
   },
   fetchNewsHeadlines: function (cryptoObject, callback) {
     // Should query newsapi.org for news headlines for the given crypto
@@ -273,17 +272,15 @@ const apiApp = {
     // Get the coinmarketcap.com 'Quick Search' JSON file and save the details in quickSearchCryptocurrencyList array
     // This data is made up of objects that look like: {"tokens": ["Bitcoin", "BTC"], "symbol": "BTC", "name": "Bitcoin", "rank": 1, "slug": "bitcoin"}
     // This data will be used to filter search query
-    if (!this.cryptocurrencySearchList.length) {
-      this.callAPI(new ApiQueryParams(
-        'https://files.coinmarketcap.com/generated/search/quick_search.json',
-        { /* No params */ },
-        (quickSearchAPIData) => {
-          // Process the results and extract only what is needed from JSON
-          this.cryptocurrencySearchList = quickSearchAPIData;
-        },
-        'cannot load data from files.coinmarketcap.com'
-      ));
-    }
+    this.callAPI(new ApiQueryParams(
+      'https://files.coinmarketcap.com/generated/search/quick_search.json',
+      { /* No params */ },
+      (quickSearchAPIData) => {
+        // Process the results and extract only what is needed from JSON
+        this.cryptocurrencySearchList = quickSearchAPIData;
+      },
+      'cannot load data from files.coinmarketcap.com'
+    ));
   }
 };
 
@@ -310,7 +307,7 @@ const apiView = {
     $('.top-ten-section').prop('hidden', false).attr('aria-hidden', 'false');
     $('.intro').prop('hidden', false).attr('aria-hidden', 'false');
 
-    // Hide the home button and crypto info section and clear it out news articles and reddit posts
+    // Hide the home button and crypto info section and clear out news articles and reddit posts
     $('.crypto-info-section').prop('hidden', true).attr('aria-hidden', 'true');
     $('nav').prop('hidden', true).attr('aria-hidden', 'true');
     $('.news-article-container').empty();
