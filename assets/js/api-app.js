@@ -2,13 +2,6 @@
 
 /**
  * CryptoCurrency - Class for a CryptoCurrency
- * @param id - coinmarketcap ID for this crypto
- * @param name - Full name of the Cryptocurrency
- * @param symbol - Ticker (or stock) symbol of the Cryptocurrency
- * @param rank - market cap rank
- * @param iconPATH - URL to the Cryptocurrency icon
- * @param marketData - Market Data object
- * @constructor
  */
 function CryptoCurrency({ id, name, symbol, rank, price_usd, price_btc, market_cap_usd, '24h_volume_usd': volume_24h_usd }) {
   this.id = id;
@@ -23,6 +16,28 @@ function CryptoCurrency({ id, name, symbol, rank, price_usd, price_btc, market_c
     volume_24h_usd: volume_24h_usd
   };
 }
+
+CryptoCurrency.prototype.getPriceUSD = function() {
+  let price = this.marketData.price_usd;
+  if (Number.parseFloat(price) < 1) {
+    return Number.parseFloat(price).toFixed(6);
+  } else {
+    return Number.parseFloat(price).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+};
+
+CryptoCurrency.prototype.getPriceBTC = function() {
+  return Number.parseFloat(this.marketData.price_btc).toFixed(8);
+};
+
+CryptoCurrency.prototype.getMarketCapUSD = function() {
+  return Number.parseFloat(this.marketData.market_cap_usd).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
+CryptoCurrency.prototype.get24hTradingVolumeUSD = function() {
+  return Number.parseFloat(this.marketData.volume_24h_usd).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
 /**
  * ApiQuery - class to hold the API query details
  * @param apiURL - URL of the API
@@ -342,19 +357,14 @@ const apiView = {
   },
   displayMarketData: function (crypto) {
     // Update market data for the current crypto on the 'info' page
-    // Use some regex (sourced online) to format the number as a currency with commas
     // USD price
-    if (Number.parseFloat(crypto.marketData.price_usd) < 1) {
-      $('.js-usd-price').text('$' + Number.parseFloat(crypto.marketData.price_usd).toFixed(6).toString());
-    } else {
-      $('.js-usd-price').text('$' + Number.parseFloat(crypto.marketData.price_usd).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-    }
+    $('.js-usd-price').text('$' + crypto.getPriceUSD());
     // BTC price
-    $('.js-btc-price').text(Number.parseFloat(crypto.marketData.price_btc).toFixed(8));
+    $('.js-btc-price').text(crypto.getPriceBTC());
     // Market Cap
-    $('.js-market-cap').text('$' + Number.parseFloat(crypto.marketData.market_cap_usd).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+    $('.js-market-cap').text('$' + crypto.getMarketCapUSD());
     // Trading volume
-    $('.js-volume').text('$' + Number.parseFloat(crypto.marketData.volume_24h_usd).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+    $('.js-volume').text('$' + crypto.get24hTradingVolumeUSD());
   },
   createNewsArticleDivElement: function (newsArticleObj) {
     let publishedAtDate = new Date(newsArticleObj.publishedAt);
