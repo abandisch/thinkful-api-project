@@ -17,12 +17,16 @@ function CryptoCurrency({ id, name, symbol, rank, price_usd, price_btc, market_c
   };
 }
 
+CryptoCurrency.prototype.formatCurrency = function(number, currencySymbol) {
+  return currencySymbol + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
 CryptoCurrency.prototype.getPriceUSD = function() {
   let price = this.marketData.price_usd;
   if (Number.parseFloat(price) < 1) {
-    return Number.parseFloat(price).toFixed(6);
+    return this.formatCurrency(Number.parseFloat(price).toFixed(6), '$');
   } else {
-    return Number.parseFloat(price).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return this.formatCurrency(Number.parseFloat(price).toFixed(2), '$');
   }
 };
 
@@ -31,11 +35,11 @@ CryptoCurrency.prototype.getPriceBTC = function() {
 };
 
 CryptoCurrency.prototype.getMarketCapUSD = function() {
-  return Number.parseFloat(this.marketData.market_cap_usd).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return this.formatCurrency(Number.parseFloat(this.marketData.market_cap_usd).toFixed(2), '$');
 };
 
 CryptoCurrency.prototype.get24hTradingVolumeUSD = function() {
-  return Number.parseFloat(this.marketData.volume_24h_usd).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return this.formatCurrency(Number.parseFloat(this.marketData.volume_24h_usd).toFixed(2), '$');
 };
 
 /**
@@ -358,13 +362,13 @@ const apiView = {
   displayMarketData: function (crypto) {
     // Update market data for the current crypto on the 'info' page
     // USD price
-    $('.js-usd-price').text('$' + crypto.getPriceUSD());
+    $('.js-usd-price').text(crypto.getPriceUSD());
     // BTC price
     $('.js-btc-price').text(crypto.getPriceBTC());
     // Market Cap
-    $('.js-market-cap').text('$' + crypto.getMarketCapUSD());
+    $('.js-market-cap').text(crypto.getMarketCapUSD());
     // Trading volume
-    $('.js-volume').text('$' + crypto.get24hTradingVolumeUSD());
+    $('.js-volume').text(crypto.get24hTradingVolumeUSD());
   },
   createNewsArticleDivElement: function (newsArticleObj) {
     let publishedAtDate = new Date(newsArticleObj.publishedAt);
