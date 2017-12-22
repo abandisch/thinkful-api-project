@@ -56,9 +56,25 @@ function ApiQueryParams(apiURL, queryData, successCallback, failMessage, dataTyp
   this.queryData = queryData;
   this.successCallback = successCallback;
   this.failMessage = failMessage;
-  this.dataType = !!dataType ? dataType : 'json';
-  this.timeout = !!timeout ? timeout : 10;
+  this.dataType = dataType;
+  this.timeout = timeout;
 }
+
+ApiQueryParams.prototype.getDataType = function () {
+  if (this.dataType !== undefined) {
+    return this.dataType;
+  } else {
+    return 'json';
+  }
+};
+
+ApiQueryParams.prototype.getTimeout = function () {
+  if (this.timeout !== undefined) {
+    return this.timeout;
+  } else {
+    return 10;
+  }
+};
 
 // JSON results from each API used for testing/development, so I don't spam the API's when testing/developing
 const TEST_CoinmarketcapAPIURL = 'resources/test-json/coinmarketcap.json';
@@ -95,7 +111,7 @@ const apiApp = {
     $.ajax({
       url: apiQueryData.url,
       data: apiQueryData.queryData,
-      dataType: apiQueryData.dataType,
+      dataType: apiQueryData.getDataType(),
       type: 'GET'
     })
       .done(function (apiData) {
