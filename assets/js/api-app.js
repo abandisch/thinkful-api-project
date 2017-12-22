@@ -63,12 +63,12 @@ const apiApp = {
   cryptocompareData: {},
   //cryptocompareAPIURL: 'https://min-api.cryptocompare.com/data/all/coinlist',
   cryptocompareAPIURL: 'assets/js/cryptocompare.json', // Pre-downloaded this, since I only need image URL's
-  // coinmarketcapAPIURL: 'https://api.coinmarketcap.com/v1/ticker/',
-  coinmarketcapAPIURL: TEST_CoinmarketcapAPIURL,
-  // newsapiorgAPIURL: 'https://newsapi.org/v2/everything',
-  newsapiorgAPIURL: TEST_NewsorgAPIURL,
-  // redditAPIURL: 'https://www.reddit.com/search.json',
-  redditAPIURL: TEST_RedditAPIURL,
+  coinmarketcapAPIURL: 'https://api.coinmarketcap.com/v1/ticker/',
+  // coinmarketcapAPIURL: TEST_CoinmarketcapAPIURL,
+  newsapiorgAPIURL: 'https://newsapi.org/v2/everything',
+  // newsapiorgAPIURL: TEST_NewsorgAPIURL,
+  redditAPIURL: 'https://www.reddit.com/search.json',
+  // redditAPIURL: TEST_RedditAPIURL,
   callAPI: function (apiQueryData) {
     // Should execute the Ajax call to the API URL and provide any query data
     // Should execute the success call back if successful
@@ -256,16 +256,15 @@ const apiApp = {
  * Object to control the view of the app
  */
 const apiView = {
-  createCryptoCurrencyLiElement: function (collectiveHTML, cryptoCurrencyObj) {
-    collectiveHTML += `<li>
-                         <a href="#" data-crypto-id="${cryptoCurrencyObj.id}">
-                           <figure>
-                             <img src="${cryptoCurrencyObj.iconPATH}" alt="${cryptoCurrencyObj.cryptoName}">
-                             <figcaption class="text-center">${cryptoCurrencyObj.tickerSymbol} <span class="sr-only">${cryptoCurrencyObj.cryptoName}</span></figcaption>
-                           </figure>
-                         </a>
-                       </li>`;
-    return collectiveHTML;
+  createCryptoCurrencyLiElement: function (cryptoCurrencyObj) {
+    return `<li>
+              <a href="#" data-crypto-id="${cryptoCurrencyObj.id}">
+                <figure>
+                  <img src="${cryptoCurrencyObj.iconPATH}" alt="${cryptoCurrencyObj.cryptoName}">
+                  <figcaption class="text-center">${cryptoCurrencyObj.tickerSymbol} <span class="sr-only">${cryptoCurrencyObj.cryptoName}</span></figcaption>
+                </figure>
+              </a>
+            </li>`;
   },
   showStartPage: function () {
     // Setup top ten list on main page
@@ -286,8 +285,8 @@ const apiView = {
     apiApp.loadCryptocurrencySearchList();
 
     // Fetch and show the top 10 cryptos
-    apiApp.fetchTopCryptocurrencies(10, function (cryptocurrencyList) {
-      let topTenListHTML = cryptocurrencyList.reduce(apiView.createCryptoCurrencyLiElement, '');
+    apiApp.fetchTopCryptocurrencies(10, (cryptocurrencyList) => {
+      let topTenListHTML = cryptocurrencyList.map(this.createCryptoCurrencyLiElement).join('');
       $('.top-ten-cryptos').html('').append(topTenListHTML);
       $('.text-loading').prop('hidden', true).attr('aria-hidden', 'true');
       $('.top-ten-container').prop('hidden', false).attr('aria-hidden', 'false');
@@ -357,34 +356,37 @@ const apiView = {
     // Trading volume
     $('.js-volume').text('$' + Number.parseFloat(crypto.marketData.volume_24h_usd).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
   },
-  createNewsArticleDivElement: function (collectiveHTML, newsArticleObj) {
+  createNewsArticleDivElement: function (newsArticleObj) {
     let publishedAtDate = new Date(newsArticleObj.publishedAt);
 
-    collectiveHTML += `<div class="news-item">
-                         <div class="news-image">
-                           <img src="${newsArticleObj.urlToImage}" alt="News Article Image">
-                         </div>
-                         <div class="news-content">
-                           <h4 class="news-headline"><a href="${newsArticleObj.url}" target="_blank">${newsArticleObj.title}</a></h4>
-                           <p class="news-description">${newsArticleObj.description}</p>
-                           <a class="news-link" href="${newsArticleObj.url}" aria-label="Read Full Article on ${newsArticleObj.title}" target="_blank">Read Full Article <i class="fa fa-external-link" aria-hidden="true"></i></a>
-                           <p class="news-source"><small>Published by ${newsArticleObj.source.name} on ${publishedAtDate.getDate()}/${publishedAtDate.getMonth() + 1}/${publishedAtDate.getFullYear()}</small></p>
-                         </div>
-                       </div>`;
-    return collectiveHTML;
+    if (newsArticleObj.urlToImage === null) { // if the API doesn't provide an image, fall back to a generic image
+      newsArticleObj.urlToImage = 'assets/images/generic-news.jpg';
+    }
+
+    return `<div class="news-item">
+              <div class="news-image">
+                <img src="${newsArticleObj.urlToImage}" alt="News Article Image">
+              </div>
+              <div class="news-content">
+                <h4 class="news-headline"><a href="${newsArticleObj.url}" target="_blank">${newsArticleObj.title}</a></h4>
+                <p class="news-description">${newsArticleObj.description}</p>
+                <a class="news-link" href="${newsArticleObj.url}" aria-label="Read Full Article on ${newsArticleObj.title}" target="_blank">Read Full Article <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                <p class="news-source"><small>Published by ${newsArticleObj.source.name} on ${publishedAtDate.getDate()}/${publishedAtDate.getMonth() + 1}/${publishedAtDate.getFullYear()}</small></p>
+              </div>
+           </div>`;
   },
   displayNewsArticles: function (crypto) {
     // Should get the apiApp object to query the news headlines
     // Should display these news headlines to the user
     apiApp.fetchNewsHeadlines(crypto, function (newsArticles) {
       // let newsArticleArrayIndex = 0; // Will incorporate properly this later when creating 'load more' functionality.
-      let newsArticlesHTML = newsArticles.slice(0, 5).reduce(apiView.createNewsArticleDivElement, '');
+      let newsArticlesHTML = newsArticles.slice(0, 5).map(apiView.createNewsArticleDivElement).join('');
       // Remove loading text and show news articles
       $('.text-loading-articles').prop('hidden', true).attr('aria-hidden', 'true');
       $('.news-article-container').html(newsArticlesHTML).prop('hidden', false).attr('aria-hidden', 'false');
     });
   },
-  createRedditPostDivElement: function (collectiveHTML, redditPostObj) {
+  createRedditPostDivElement: function (redditPostObj) {
     let displayArea = '';
 
     if (redditPostObj.is_self) { // self post - show text
@@ -393,25 +395,24 @@ const apiView = {
       displayArea = `<div class="reddit-post-display-area" data-type="image" data-media-url="${redditPostObj.url}" data-media-alt="${redditPostObj.title}" style="display: none;"></div>`;
     }
 
-    collectiveHTML += `<div class="reddit-post">
-                         <div class="top-content">
-                           <div class="reddit-post-image">
-                             <img src="${redditPostObj.thumbnailURL}" alt="Reddit Post Image">
-                           </div>
-                           <div class="reddit-post-content">
-                             <h4 class="reddit-post-headline"><a href="${redditPostObj.url}" target="_blank">${redditPostObj.title}</a> <a class="reddit-post-domain" href="${MAIN_REDDIT_URL}/domain/${redditPostObj.domain}/" target="_blank"><small>(${redditPostObj.domain})</small></a></h4>
-                             <a class="reddit-post-show ${redditPostObj.showLocal ? 'js-show-media-locally' : ''}" 
-                               href="${redditPostObj.showLocal ? '#' : redditPostObj.url}" 
-                               target="_blank" 
-                               aria-label="${redditPostObj.showLocal ? 'Show' : 'Open'} the post for ${redditPostObj.title}">
-                               ${redditPostObj.showLocal ? 'Show' : 'Open'} Post <i class="fa ${redditPostObj.showLocal ? 'fa-angle-double-down' : 'fa-external-link'}" aria-hidden="true"></i>
-                             </a>
-                             <p class="reddit-post-source"><a href="${MAIN_REDDIT_URL}${redditPostObj.permalink}" target="_blank">${redditPostObj.num_comments} Comments</a> on <a href="${MAIN_REDDIT_URL}/${redditPostObj.subreddit_name_prefixed}" target="_blank">${redditPostObj.subreddit_name_prefixed}</a></p>
-                           </div>
-                         </div>
-                         ${displayArea}
-                       </div>`;
-    return collectiveHTML;
+    return `<div class="reddit-post">
+              <div class="top-content">
+                <div class="reddit-post-image">
+                  <img src="${redditPostObj.thumbnailURL}" alt="Reddit Post Image">
+                </div>
+                <div class="reddit-post-content">
+                  <h4 class="reddit-post-headline"><a href="${redditPostObj.url}" target="_blank">${redditPostObj.title}</a> <a class="reddit-post-domain" href="${MAIN_REDDIT_URL}/domain/${redditPostObj.domain}/" target="_blank"><small>(${redditPostObj.domain})</small></a></h4>
+                  <a class="reddit-post-show ${redditPostObj.showLocal ? 'js-show-media-locally' : ''}" 
+                    href="${redditPostObj.showLocal ? '#' : redditPostObj.url}" 
+                    target="_blank" 
+                    aria-label="${redditPostObj.showLocal ? 'Show' : 'Open'} the post for ${redditPostObj.title}">
+                    ${redditPostObj.showLocal ? 'Show' : 'Open'} Post <i class="fa ${redditPostObj.showLocal ? 'fa-angle-double-down' : 'fa-external-link'}" aria-hidden="true"></i>
+                  </a>
+                  <p class="reddit-post-source"><a href="${MAIN_REDDIT_URL}${redditPostObj.permalink}" target="_blank">${redditPostObj.num_comments} Comments</a> on <a href="${MAIN_REDDIT_URL}/${redditPostObj.subreddit_name_prefixed}" target="_blank">${redditPostObj.subreddit_name_prefixed}</a></p>
+                </div>
+              </div>
+              ${displayArea}
+            </div>`;
   },
   displayRedditPosts: function (crypto) {
     // Should get the apiApp object to query reddit.com for relevant posts
@@ -421,7 +422,7 @@ const apiView = {
     // if the post is an external URL (i.e. not reddit.com), pro
     apiApp.fetchRedditPosts(crypto, function (redditPosts) {
 
-      let redditPostsHTML = redditPosts.reduce(apiView.createRedditPostDivElement, '');
+      let redditPostsHTML = redditPosts.map(apiView.createRedditPostDivElement, '').join('');
 
       $('.text-loading-posts').prop('hidden', true).attr('aria-hidden', 'true');
       $('.reddit-posts-container')
