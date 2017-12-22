@@ -63,12 +63,12 @@ const apiApp = {
   cryptocompareData: {},
   //cryptocompareAPIURL: 'https://min-api.cryptocompare.com/data/all/coinlist',
   cryptocompareAPIURL: 'assets/js/cryptocompare.json', // Pre-downloaded this, since I only need image URL's
-  coinmarketcapAPIURL: 'https://api.coinmarketcap.com/v1/ticker/',
-  // coinmarketcapAPIURL: TEST_CoinmarketcapAPIURL,
-  newsapiorgAPIURL: 'https://newsapi.org/v2/everything',
-  // newsapiorgAPIURL: TEST_NewsorgAPIURL,
-  redditAPIURL: 'https://www.reddit.com/search.json',
-  // redditAPIURL: TEST_RedditAPIURL,
+  // coinmarketcapAPIURL: 'https://api.coinmarketcap.com/v1/ticker/',
+  coinmarketcapAPIURL: TEST_CoinmarketcapAPIURL,
+  // newsapiorgAPIURL: 'https://newsapi.org/v2/everything',
+  newsapiorgAPIURL: TEST_NewsorgAPIURL,
+  // redditAPIURL: 'https://www.reddit.com/search.json',
+  redditAPIURL: TEST_RedditAPIURL,
   callAPI: function (apiQueryData) {
     // Should execute the Ajax call to the API URL and provide any query data
     // Should execute the success call back if successful
@@ -123,24 +123,15 @@ const apiApp = {
     this.callAPI(apiQueryParams);
   },
   fetchTopCryptocurrencies: function (howManyCryptos, apiViewCallback) {
-    // Should query Cryptocompare.com to get crypto data, which includes images for each crypto (the only reason to query this API)
-    // Then should call the fetchCoinData, which will query coinmarketcap.com for crypto market data
-    // That callback function should build the array of CryptoCurrencies and then call apiViewCallback
-
-    if (!this.cryptocurrencyList.length && howManyCryptos !== this.cryptocurrencyList.length) {
-      this.callAPI(new ApiQueryParams(
-        this.cryptocompareAPIURL,
-        {/* no parameters */},
-        (cryptocompareApiData) => {
-          this.cryptocompareData = cryptocompareApiData.Data;
-          this.fetchTopCryptocurrencyData(howManyCryptos, apiViewCallback);
-        },
-        'Unable to fetch cryptocurrency list from cryptocompare.com API. Please try again later.'
-      ));
-    } else {
-      apiViewCallback(this.cryptocurrencyList);
-    }
-
+    this.callAPI(new ApiQueryParams(
+      this.cryptocompareAPIURL,
+      {/* no parameters */},
+      (cryptocompareApiData) => {
+        this.cryptocompareData = cryptocompareApiData.Data;
+        this.fetchTopCryptocurrencyData(howManyCryptos, apiViewCallback);
+      },
+      'Unable to fetch cryptocurrency list from cryptocompare.com API. Please try again later.'
+    ));
   },
   fetchCryptocurrency: function (cryptocurrencyID, callback) {
     // check to see if its in the top 10, if so return that one, if not, do an API call
