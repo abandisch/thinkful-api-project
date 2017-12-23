@@ -386,7 +386,7 @@ const apiView = {
   createNewsArticleDivElement: function (newsArticleObj) {
     let publishedAtDate = new Date(newsArticleObj.publishedAt);
 
-    if (newsArticleObj.urlToImage === null) { // if the API doesn't provide an image, fall back to a generic image
+    if (newsArticleObj.urlToImage === null || newsArticleObj.urlToImage === '') { // if the API doesn't provide an image, fall back to a generic image
       newsArticleObj.urlToImage = 'assets/images/generic-news.jpg';
     }
 
