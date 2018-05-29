@@ -272,15 +272,19 @@ const apiApp = {
     // Get the coinmarketcap.com 'Quick Search' JSON file and save the details in quickSearchCryptocurrencyList array
     // This data is made up of objects that look like: {"tokens": ["Bitcoin", "BTC"], "symbol": "BTC", "name": "Bitcoin", "rank": 1, "slug": "bitcoin"}
     // This data will be used to filter search query
-    this.callAPI(new ApiQueryParams(
+    $.getJSON('./assets/js/quick_search.json', (data) => {
+      console.log('data:', data);
+      this.cryptocurrencySearchList = data;
+    });
+    /* this.callAPI(new ApiQueryParams(
       'https://files.coinmarketcap.com/generated/search/quick_search.json',
-      { /* No params */ },
+      {  },
       (quickSearchAPIData) => {
         // Process the results and extract only what is needed from JSON
         this.cryptocurrencySearchList = quickSearchAPIData;
       },
       'cannot load data from files.coinmarketcap.com'
-    ));
+    )); */
   }
 };
 
@@ -315,7 +319,7 @@ const apiView = {
 
     // Load the search data
     apiApp.loadCryptocurrencySearchList();
-
+    
     // Fetch and show the top 10 cryptos
     apiApp.fetchTopCryptocurrencies(10, (cryptocurrencyList) => {
       let topTenListHTML = cryptocurrencyList.map(this.createCryptoCurrencyLiElement).join('');
